@@ -13,3 +13,7 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+
+const string ERROR_CODE = "(ballerinax/insights)ResponseError";
+
+const string VERSION = "?api-version=2016-12-12";
