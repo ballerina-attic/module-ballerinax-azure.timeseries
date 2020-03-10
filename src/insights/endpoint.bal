@@ -50,7 +50,7 @@ public type InsightsClient client object {
     # Get details of all the available environments
     #
     # + return - Array of environment records or error
-    public remote function getEnvironments() returns @tainted (Environment[] | error) {
+    public remote function getEnvironments() returns Environment[] | error {
         var httpResponse = self.insightsClient->get(VERSION);
 
         if (httpResponse is http:Response) {
@@ -118,7 +118,7 @@ public type EnvironmentClient client object {
     # Get the availability details of the environment
     #
     # + return - AvailabiltyResponse record if successful else an error
-    public remote function getAvailability() returns @tainted (AvailabiltyResponse | error) {
+    public remote function getAvailability() returns AvailabiltyResponse | error {
 
         var httpResponse = self.environmentClient->get("/availability" + VERSION);
 
@@ -141,7 +141,7 @@ public type EnvironmentClient client object {
     #
     # + searchSpan - Search time interval
     # + return - Array of property records or error
-    public remote function getMetaData(SearchSpan searchSpan) returns @tainted (PropertyMetaData[] | error) {
+    public remote function getMetaData(SearchSpan searchSpan) returns PropertyMetaData[] | error {
 
         MetaDataRequest metaDataRequest = {
             searchSpan: searchSpan
@@ -172,7 +172,7 @@ public type EnvironmentClient client object {
     #
     # + eventRequest - EventRequest Record
     # + return - Event Response record which will contain returned events and metadata or error
-    public remote function getEvents(EventsRequest eventRequest) returns @tainted (EventsResponse | error) {
+    public remote function getEvents(EventsRequest eventRequest) returns EventsResponse | error {
 
         json eventsReqPayload = check json.constructFrom(eventRequest);
 
@@ -199,7 +199,7 @@ public type EnvironmentClient client object {
     #
     # + aggregateRequest - Aggregate Request Record
     # + return - Aggregate Response record which will contain aggregates events
-    public remote function getAggregates(AggregateRequest aggregateRequest) returns @tainted (AggregatesResponse | error) {
+    public remote function getAggregates(AggregateRequest aggregateRequest) returns AggregatesResponse | error {
 
         json eventsReqPayload = check json.constructFrom(aggregateRequest);
 

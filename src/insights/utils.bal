@@ -13,17 +13,17 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 
-function processResError(error errorResponse) returns error {
+function processResError(error errorResponse) returns @untainted error {
     error err = error(ERROR_CODE, message = <string>errorResponse.detail()?.message);
     return err;
 }
 
-function processResBodyError(json errorResponse) returns error {
+function processResBodyError(json errorResponse) returns @untainted error {
     error err = error(ERROR_CODE, message = errorResponse.toString());
     return err;
 }
 
-function createEnvironments(json jsonResponse) returns Environment[] | error {
+function createEnvironments(json jsonResponse) returns @untainted (Environment[] | error) {
     Environment[] environments = convertToEnvironments(<json[]>jsonResponse.environments);
     return environments;
 }
@@ -54,7 +54,7 @@ function convertToEnvironments(json[] jsonEnv) returns Environment[] {
 }
 
 
-function createAvailabilityResponse(json jsonResponse) returns AvailabiltyResponse {
+function createAvailabilityResponse(json jsonResponse) returns @untainted AvailabiltyResponse {
     AvailabiltyResponse response = {
         'from: <string>jsonResponse.range.'from,
         'to: <string>jsonResponse.range.'to,
@@ -64,7 +64,7 @@ function createAvailabilityResponse(json jsonResponse) returns AvailabiltyRespon
     return response;
 }
 
-function createPropertiesArray(json jsonResponse) returns PropertyMetaData[] | error {
+function createPropertiesArray(json jsonResponse) returns @untainted (PropertyMetaData[] | error) {
     PropertyMetaData[] properties = convertToProperties(<json[]>jsonResponse.properties);
     return properties;
 }
@@ -82,7 +82,7 @@ function convertToProperties(json[] jsonProperties) returns PropertyMetaData[] {
     return properties;
 }
 
-function createEventsResponse(json jsonResponse) returns EventsResponse | error {
+function createEventsResponse(json jsonResponse) returns @untainted (EventsResponse | error) {
     Warning[] warningsArray = !(jsonResponse.warnings is error)
     ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
     EventsResponse eventsResponse = {
@@ -121,7 +121,7 @@ function convertToEvents(json[] jsonEvents) returns Event[] {
     return events;
 }
 
-function createAggregateResponse(json jsonResponse) returns AggregatesResponse | error {
+function createAggregateResponse(json jsonResponse) returns @untainted (AggregatesResponse | error) {
     Warning[] warningsArray = !(jsonResponse.warnings is error)
     ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
     AggregatesResponse aggregateResponse = {
