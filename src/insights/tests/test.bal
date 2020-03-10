@@ -104,13 +104,13 @@ function testAzureInsightsGetEvents() {
         'type: "Double"
     };
 
-    BasicExpression basicExpression = {
+    CompareExpression compareExp = {
         'left: latitudeProperty,
         'right: 3.14
     };
 
     EqualExpression equalLattitue = {
-        eq: basicExpression
+        eq: compareExp
     };
 
     EventsRequest eventsRequest = {
