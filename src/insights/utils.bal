@@ -14,7 +14,7 @@
 // specific language governing permissions and limitations
 
 function processResError(error errorResponse) returns error {
-    error err = error(ERROR_CODE, message = <string> errorResponse.detail()?.message);
+    error err = error(ERROR_CODE, message = <string>errorResponse.detail()?.message);
     return err;
 }
 
@@ -33,7 +33,7 @@ function convertToEnvironments(json[] jsonEnv) returns Environment[] {
     Environment[] environments = [];
     foreach json environment in jsonEnv {
 
-        json[] rolesJson = <json[]> environment.roles;
+        json[] rolesJson = <json[]>environment.roles;
 
         int j = 0;
         string[] roles = [];
@@ -97,19 +97,19 @@ function convertToEvents(json[] jsonEvents) returns Event[] {
     Event[] events = [];
     foreach json event in jsonEvents {
         // Casted to access fields with special characters i.e $
-        map<json> eventObj = <map<json>> event;
+        map<json> eventObj = <map<json>>event;
 
         events[i] = {
             timestamp: eventObj["$ts"].toString(),
-            values: <json[]> event.values
+            values: <json[]>event.values
         };
 
-        if (i == 0) {
+        if (!(event.schema is error)) {
             PropertyMetaData[] properties = convertToProperties(<json[]>event.schema.properties);
-            map<json> eventScema = <map<json>> event.schema;
+            map<json> eventScema = <map<json>>event.schema;
 
             events[i].schema = {
-                rid: <int> eventScema.rid,
+                rid: <int>eventScema.rid,
                 esn: eventScema["$esn"].toString(),
                 properties: properties
             };

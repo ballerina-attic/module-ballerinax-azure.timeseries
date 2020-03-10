@@ -187,7 +187,6 @@ public type EnvironmentClient client object {
                 if (httpResponse.statusCode == http:STATUS_OK) {
                     return createEventsResponse(jsonResponse);
                 }
-                // todo Error codes?
                 return processResBodyError(jsonResponse);
             }
             return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response");
