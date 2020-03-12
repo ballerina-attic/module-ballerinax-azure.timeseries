@@ -18,22 +18,14 @@ import ballerina/config;
 import ballerina/io;
 import ballerina/test;
 
-InsightsConfiguration insightsConfig = {
+ConnectionConfiguration connConfig = {
     tenantId: config:getAsString("TENANT_ID"),
     clientId: config:getAsString("CLIENT_ID"),
     clientSecrect: config:getAsString("CLIENT_SECRET")
 };
 
-EnvironmentConfiguration config = {
-    environmentFqdn: config:getAsString("ENV_FQDN"),
-    tenantId: config:getAsString("TENANT_ID"),
-    clientId: config:getAsString("CLIENT_ID"),
-    clientSecrect: config:getAsString("CLIENT_SECRET")
-};
-
-InsightsClient insightsClient = new InsightsClient(insightsConfig);
-EnvironmentClient environmentClient = new EnvironmentClient(config);
-
+InsightsClient insightsClient = new InsightsClient(connConfig);
+EnvironmentClient environmentClient = new EnvironmentClient(config:getAsString("ENV_FQDN"), connConfig);
 
 @test:Config {}
 function testAzureInsightsEnvironemtns() {

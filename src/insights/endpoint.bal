@@ -19,27 +19,27 @@ import ballerina/oauth2;
 
 public type InsightsClient client object {
     private http:Client insightsClient;
-    private InsightsConfiguration config;
+    private ConnectionConfiguration config;
 
-    public function __init(InsightsConfiguration insightsConfig) {
-        self.config = insightsConfig;
+    public function __init(ConnectionConfiguration connConfig) {
+        self.config = connConfig;
 
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
-            tokenUrl: AZURE_LOGIN_BASE_URL + insightsConfig.tenantId + "/oauth2/v2.0/token",
-            clientId: insightsConfig.clientId,
-            clientSecret: insightsConfig.clientSecrect,
+            tokenUrl: AZURE_LOGIN_BASE_URL + connConfig.tenantId + "/oauth2/v2.0/token",
+            clientId: connConfig.clientId,
+            clientSecret: connConfig.clientSecrect,
             scopes: [AZURE_TSI_DEFAULT_SCOPE]
 
         });
         http:BearerAuthHandler bearerHandler = new (oauth2Provider);
 
         self.insightsClient = new (INSIGHTS_BASE_URL, {
-            timeoutInMillis: insightsConfig.timeoutInMillis,
+            timeoutInMillis: connConfig.timeoutInMillis,
             auth: {
                 authHandler: bearerHandler
             },
             http1Settings: {
-                proxy: insightsConfig.proxyConfig
+                proxy: connConfig.proxyConfig
             }
         });
     }
@@ -70,16 +70,8 @@ public type InsightsClient client object {
     # + environmentFqdn - FQDN of the environment
     # + return - Environment client
     public function getEnvironment(string environmentFqdn) returns EnvironmentClient | error {
-        EnvironmentConfiguration environConfig = {
-            environmentFqdn: environmentFqdn,
-            tenantId: self.config.tenantId,
-            clientId: self.config.clientId,
-            clientSecrect: self.config.clientSecrect,
-            timeoutInMillis: self.config.timeoutInMillis,
-            proxyConfig: self.config.proxyConfig
-        };
 
-        EnvironmentClient environmentClient = new EnvironmentClient(environConfig);
+        EnvironmentClient environmentClient = new EnvironmentClient(environmentFqdn, self.config);
         return environmentClient;
     }
 
@@ -90,25 +82,25 @@ public type EnvironmentClient client object {
     public http:Client environmentClient;
     public string BASE_URL;
 
-    public function __init(EnvironmentConfiguration environmentConfiguration) {
-        self.BASE_URL = "https://" + environmentConfiguration.environmentFqdn;
+    public function __init(string envFQDN, ConnectionConfiguration connConfig) {
+        self.BASE_URL = "https://" + envFQDN;
 
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
-            tokenUrl: AZURE_LOGIN_BASE_URL + environmentConfiguration.tenantId + "/oauth2/v2.0/token",
-            clientId: environmentConfiguration.clientId,
-            clientSecret: environmentConfiguration.clientSecrect,
+            tokenUrl: AZURE_LOGIN_BASE_URL + connConfig.tenantId + "/oauth2/v2.0/token",
+            clientId: connConfig.clientId,
+            clientSecret: connConfig.clientSecrect,
             scopes: [AZURE_TSI_DEFAULT_SCOPE]
 
         });
         http:BearerAuthHandler bearerHandler = new (oauth2Provider);
 
         self.environmentClient = new (self.BASE_URL, {
-            timeoutInMillis: environmentConfiguration.timeoutInMillis,
+            timeoutInMillis: connConfig.timeoutInMillis,
             auth: {
                 authHandler: bearerHandler
             },
             http1Settings: {
-                proxy: environmentConfiguration.proxyConfig
+                proxy: connConfig.proxyConfig
             }
         });
     }

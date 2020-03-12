@@ -23,24 +23,7 @@ import ballerina/http;
 # + clientSecrect - Client secret of the application that is used for authentication
 # + timeoutInMillis - Timeout for the HTTP client used for communication
 # + proxyConfig - Proxy config if needed
-public type InsightsConfiguration record {
-    string tenantId;
-    string clientId;
-    string clientSecrect;
-    int timeoutInMillis = 60000;
-    http:ProxyConfig? proxyConfig = ();
-};
-
-# Configuration for Environment Client
-#
-# + environmentFqdn - FQDN of the evironement that needs to be queried
-# + tenantId - TenantId of the environments that needs to be accessed
-# + clientId - Client Id of the application that is used for authentication
-# + clientSecrect - Client secret of the application that is used for authentication
-# + timeoutInMillis - Timeout for the HTTP client used for communication
-# + proxyConfig - Proxy config if needed
-public type EnvironmentConfiguration record {
-    string environmentFqdn;
+public type ConnectionConfiguration record {
     string tenantId;
     string clientId;
     string clientSecrect;
