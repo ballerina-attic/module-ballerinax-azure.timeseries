@@ -1,10 +1,10 @@
-## Compatibility
+# Compatibility
 
 | Ballerina Language Version  | Azure Insights API Version |
 | ----------------------------| -------------------------------|
 |  1.2.0                      |   2016-12-12                           |
 
-### Prerequisites
+## Prerequisites
 
 1. Create an environment in Azure Time-series Insights as mentioned in the [tutorial](https://docs.microsoft.com/en-us/azure/time-series-insights/tutorial-create-populate-tsi-environment)
 
