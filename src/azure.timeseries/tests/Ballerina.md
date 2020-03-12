@@ -2,7 +2,7 @@
 
 | Ballerina Language Version  | Azure Insights API Version |
 | ----------------------------| -------------------------------|
-|  1.1.x                      |   2016-12-12                           |
+|  1.2.0                      |   2016-12-12                           |
 
 ### Prerequisites
 
@@ -30,5 +30,5 @@ You can use the `test.bal` file to test all the connector actions by following t
 4. Run the following commands to execute the tests.
 
     ```cmd
-    ballerina test ballerina test azure.timeseries  
+    ballerina test azure.timeseries  
     ```
