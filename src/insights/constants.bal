@@ -17,3 +17,7 @@
 const string ERROR_CODE = "(ballerinax/insights)ResponseError";
 
 const string VERSION = "?api-version=2016-12-12";
+
+const string INSIGHTS_BASE_URL = "https://api.timeseries.azure.com/environments";
+const string AZURE_LOGIN_BASE_URL = "https://login.microsoftonline.com/";
+const string AZURE_TSI_DEFAULT_SCOPE = "https://api.timeseries.azure.com//.default";

@@ -24,18 +24,16 @@ public type InsightsClient client object {
     public function __init(InsightsConfiguration insightsConfig) {
         self.config = insightsConfig;
 
-        string BASE_URL = "https://api.timeseries.azure.com/environments";
-
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
-            tokenUrl: "https://login.microsoftonline.com/" + insightsConfig.tenantId + "/oauth2/v2.0/token",
+            tokenUrl: AZURE_LOGIN_BASE_URL + insightsConfig.tenantId + "/oauth2/v2.0/token",
             clientId: insightsConfig.clientId,
             clientSecret: insightsConfig.clientSecrect,
-            scopes: ["https://api.timeseries.azure.com//.default"]
+            scopes: [AZURE_TSI_DEFAULT_SCOPE]
 
         });
         http:BearerAuthHandler bearerHandler = new (oauth2Provider);
 
-        self.insightsClient = new (BASE_URL, {
+        self.insightsClient = new (INSIGHTS_BASE_URL, {
             timeoutInMillis: insightsConfig.timeoutInMillis,
             auth: {
                 authHandler: bearerHandler
@@ -96,10 +94,10 @@ public type EnvironmentClient client object {
         self.BASE_URL = "https://" + environmentConfiguration.environmentFqdn;
 
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
-            tokenUrl: "https://login.microsoftonline.com/" + environmentConfiguration.tenantId + "/oauth2/v2.0/token",
+            tokenUrl: AZURE_LOGIN_BASE_URL + environmentConfiguration.tenantId + "/oauth2/v2.0/token",
             clientId: environmentConfiguration.clientId,
             clientSecret: environmentConfiguration.clientSecrect,
-            scopes: ["https://api.timeseries.azure.com//.default"]
+            scopes: [AZURE_TSI_DEFAULT_SCOPE]
 
         });
         http:BearerAuthHandler bearerHandler = new (oauth2Provider);
