@@ -16,7 +16,7 @@
 
 You can use the `test.bal` file to test all the connector actions by following the below steps:
 
-1. Create ballerina.conf file in module-azureinsights.
+1. Create ballerina.conf file in module-azuretimeseries.
 2. Obtain the environment fqdn, client Id, client secret, and tenant id (available in azure portal after prerequisites) and add those values in the ballerina.conf file.
 
     ```conf
@@ -26,9 +26,9 @@ You can use the `test.bal` file to test all the connector actions by following t
     CLIENT_SECRET = <CLIENT_SECRET>
     ```
 
-3. Navigate to the folder `module-azureinsights`.
+3. Navigate to the folder `module-azuretimeseries`.
 4. Run the following commands to execute the tests.
 
     ```cmd
-    ballerina test ballerina test insights  
+    ballerina test ballerina test azure.timeseries  
     ```
