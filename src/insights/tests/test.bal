@@ -15,17 +15,23 @@
 // under the License.
 
 import ballerina/config;
+import ballerina/system;
 import ballerina/io;
 import ballerina/test;
 
+string tenantId = config:getAsString("TENANT_ID") == "" ? system:getEnv("TENANT_ID") : config:getAsString("TENANT_ID");
+string clientId = config:getAsString("CLIENT_ID") == "" ? system:getEnv("CLIENT_ID") : config:getAsString("CLIENT_ID");
+string clientSecrect = config:getAsString("CLIENT_SECRET") == "" ? system:getEnv("CLIENT_SECRET") : config:getAsString("CLIENT_SECRET");
+string envFQDN = config:getAsString("ENV_FQDN") == "" ? system:getEnv("ENV_FQDN") : config:getAsString("ENV_FQDN");
+
 ConnectionConfiguration connConfig = {
-    tenantId: config:getAsString("TENANT_ID"),
-    clientId: config:getAsString("CLIENT_ID"),
-    clientSecrect: config:getAsString("CLIENT_SECRET")
+    tenantId: tenantId,
+    clientId: clientId,
+    clientSecrect: clientSecrect
 };
 
 InsightsClient insightsClient = new InsightsClient(connConfig);
-EnvironmentClient environmentClient = new EnvironmentClient(config:getAsString("ENV_FQDN"), connConfig);
+EnvironmentClient environmentClient = new EnvironmentClient(envFQDN, connConfig);
 
 @test:Config {}
 function testAzureInsightsEnvironemtns() {
