@@ -12,6 +12,8 @@
 
 3. Configure Azure time-series insights environment to grant access to the application. Refer [Documentation](https://docs.microsoft.com/en-us/azure/time-series-insights/time-series-insights-data-access)
 
+4. Ensure that the environment has events with property `tags.http.status_code` of type `Double`.
+
 ## Running Samples
 
 You can use the `test.bal` file to test all the connector actions by following the below steps:

@@ -93,24 +93,6 @@ function testAzureInsightsGetMetaData() {
 function testAzureInsightsGetEvents() {
     io:println("-----------------Test case for get Environment Events API------------------");
 
-    BuiltInProperty timestamp = {
-        builtInProperty: "$ts"
-    };
-
-    Property latitudeProperty = {
-        property: "latitude",
-        'type: "Double"
-    };
-
-    CompareExpression compareExp = {
-        'left: latitudeProperty,
-        'right: 3.14
-    };
-
-    EqualExpression equalLattitue = {
-        eq: compareExp
-    };
-
     EventsRequest eventsRequest = {
         searchSpan: {
             'from: {
@@ -120,11 +102,21 @@ function testAzureInsightsGetEvents() {
                 dateTime: "2021-12-30T00:00:00.000Z"
             }
         },
-        predicate: equalLattitue,
+        predicate: {
+            eq: {
+        'left: {
+            property: "tags.http.status_code",
+            'type: "Double"
+        },
+        'right: 404
+            }
+        },
         top: {
             sort: [
                 {
-                    input: timestamp,
+                    input: {
+                        builtInProperty: "$ts"
+                    },
                     'order: ORDER_DESCENDING
                 }
             ],
@@ -149,23 +141,6 @@ function testAzureInsightsGetEvents() {
 function testAzureInsightsGetAggregates() {
     io:println("-----------------Test case for get Environment Event Aggregates API------------------");
 
-    BuiltInProperty timestamp = {
-        builtInProperty: "$ts"
-    };
-
-    DateHistogramExpression dateHistorgram = {
-        dateHistogram: {
-            input: timestamp,
-            breaks: {
-                size: "1m"
-            }
-        }
-    };
-
-    CountMeasureExpression count = {
-        count: {}
-    };
-
     AggregateRequest aggregateRequest = {
         searchSpan: {
             'from: {
@@ -177,8 +152,19 @@ function testAzureInsightsGetAggregates() {
         },
         aggregates: [
             {
-                dimension: dateHistorgram,
-                measures: [count]
+                dimension: {
+                    dateHistogram: {
+                        input: {
+                            builtInProperty: "$ts"
+                        },
+                        breaks: {
+                            size: "1m"
+                        }
+                    }
+                },
+                measures: [{
+                    count: {}
+                }]
             }
         ]
     };
