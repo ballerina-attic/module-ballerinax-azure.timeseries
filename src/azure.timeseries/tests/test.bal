@@ -106,7 +106,7 @@ function testAzureInsightsGetEvents() {
             eq: {
         'left: {
             property: "tags.http.status_code",
-            'type: "Double"
+            'type: DOUBLE_DATA_TYPE
         },
         'right: 404
             }

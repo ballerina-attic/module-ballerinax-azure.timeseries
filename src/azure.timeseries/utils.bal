@@ -75,7 +75,7 @@ function convertToProperties(json[] jsonProperties) returns PropertyMetaData[] {
     foreach json property in jsonProperties {
         properties[i] = {
             name: property.name.toString(),
-            'type: property.'type.toString()
+            'type: <DataType> property.'type
         };
         i = i + 1;
     }

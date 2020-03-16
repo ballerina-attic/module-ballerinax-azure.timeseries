@@ -46,9 +46,21 @@ public type Environment record {
     string[] roles;
 };
 
-# DateTime record used in SearchSpan
+public const BOOL_DATA_TYPE = "Bool";
+
+public const STRING_DATA_TYPE = "String";
+
+public const DOUBLE_DATA_TYPE = "Double";
+
+public const DATETIME_DATA_TYPE = "DateTime";
+
+public const TIMESPAN_DATA_TYPE = "TimeSpan";
+
+public type DataType BOOL_DATA_TYPE| STRING_DATA_TYPE| DOUBLE_DATA_TYPE| DATETIME_DATA_TYPE|TIMESPAN_DATA_TYPE;
+
+# DateTime datatype used in SearchSpan
 #
-# + dateTime - DateTime object
+# + dateTime - DateTime string
 public type DateTime record {
     string dateTime;
 };
@@ -68,7 +80,7 @@ public type SearchSpan record {
 # + type - Type of the property
 public type PropertyMetaData record {
     string name;
-    string 'type;
+    DataType 'type;
 };
 
 # Record mapped for the response form Environment Availability API
@@ -174,7 +186,7 @@ public type AggregatesResponse record {
 # + type - Data type of the property
 public type Property record {
     string property;
-    string 'type;
+    DataType 'type;
 };
 
 # Record used to define Built in Property in predicate/aggregates clause
