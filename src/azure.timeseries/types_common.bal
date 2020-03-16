@@ -20,13 +20,13 @@ import ballerina/http;
 #
 # + tenantId - TenantId of the environments that needs to be accessed
 # + clientId - Client Id of the application that is used for authentication
-# + clientSecrect - Client secret of the application that is used for authentication
+# + clientSecret - Client secret of the application that is used for authentication
 # + timeoutInMillis - Timeout for the HTTP client used for communication
 # + proxyConfig - Proxy config if needed
 public type ConnectionConfiguration record {
     string tenantId;
     string clientId;
-    string clientSecrect;
+    string clientSecret;
     int timeoutInMillis = 60000;
     http:ProxyConfig? proxyConfig = ();
 };
@@ -65,6 +65,13 @@ public type DateTime record {
     string dateTime;
 };
 
+# TimeSpan datatype
+#
+# + timeSpan - Timespan object
+public type TimeSpan record {
+    string timeSpan;
+};
+
 # Search span record used to indicate time interval for the query
 #
 # + from - The start time of the interval
@@ -89,7 +96,7 @@ public type PropertyMetaData record {
 # + to - Last time the events were received
 # + intervalSize - Interval size of the distribution of the events
 # + distribution - Th distribution along with num of events
-public type AvailabiltyResponse record {
+public type AvailabilityResponse record {
     string 'from;
     string 'to;
     string intervalSize;
@@ -109,30 +116,6 @@ public type Warning record {
     map<json> warningDetails?;
 };
 
-# Schema of the event from Events API
-#
-# + rid - Unique id for the schema
-# + esn - Event source name
-# + properties - Metadata of the properties present in the event
-public type Schema record {
-    int rid;
-    string esn;
-    PropertyMetaData[] properties;
-};
-
-# Event record to map the event details from the Events API
-#
-# + schema - Schema of the events if present
-# + schemaRid - Schema Rid is given if the schema is already defined in first event
-# + timestamp - Timestamp of the event
-# + values - Event values
-public type Event record {
-    Schema schema?;
-    string schemaRid?;
-    string timestamp;
-    json[] values;
-};
-
 # EventRequest datatype that is used to invoke Environment Events API
 #
 # + searchSpan - Used to indicate time interval for the query
@@ -144,13 +127,35 @@ public type EventsRequest record {
     LimitTop top;
 };
 
+# Event record to map the event details from the Events API
+#
+# + timestamp - Timestamp of the event
+# + values - Map of event values to the property names
+public type Event record {
+   string timestamp;
+   map<anydata> values;
+};
+
+# Schema Category of the event from Events API
+#
+# + rid - Unique id for the schema
+# + esn - Event source name
+# + properties - Metadata of the properties present in the event
+# + events - Event values mapped to Event record
+public type SchemaCategory record {
+    string rid;
+    string esn;
+    PropertyMetaData[] properties;
+    Event[] events;
+};
+
 # Record mapped to the Environment Events API
 #
 # + warnings - Warnings for the query if any
-# + events - Events requested
+# + category - Schema category including Schema and events
 public type EventsResponse record {
     Warning[] warnings;
-    Event[] events;
+    SchemaCategory[] category;
 };
 
 # AggregateRequest datatype that is used to invoke Environment Aggregates API
@@ -175,7 +180,7 @@ public type AggregatesResponse record {
 
 # Record used to define Property in predicate/aggregates clause
 #
-# + property - Name of the propety
+# + property - Name of the property
 # + type - Data type of the property
 public type Property record {
     string property;
@@ -184,7 +189,7 @@ public type Property record {
 
 # Record used to define Built in Property in predicate/aggregates clause
 #
-# + builtInProperty - Name of the propety
+# + builtInProperty - Name of the property
 public type BuiltInProperty record {
     string builtInProperty;
 };

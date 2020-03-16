@@ -14,7 +14,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-# Record used to indicate Arithmatic expression with operands of type Double
+# Record used to indicate Arithmetic expression with operands of type Double
 #
 # + left - Left operand
 # + right - Right operand
@@ -23,55 +23,55 @@ public type DoubleArithmeticExpression record {
     Property | BuiltInProperty | float 'right;
 };
 
-# Record used to indicate Arithmatic expression with operands of type DateTime/Timespan
+# Record used to indicate Arithmetic expression with operands of type DateTime/Timespan
 #
 # + left - Left operand
 # + right - Right operand
 public type StringArithmeticExpression record {
-    Property | BuiltInProperty | string 'left;
-    Property | BuiltInProperty | string 'right;
+    Property | BuiltInProperty | DateTime | TimeSpan | string 'left;
+    Property | BuiltInProperty | DateTime | TimeSpan | string 'right;
 };
 
-# Add Arithmatic Expression
+# Add Arithmetic Expression
 #
 # + add - Add expression
 public type AddExpression record {
     DoubleArithmeticExpression | StringArithmeticExpression add;
 };
 
-# Substract Arithmatic Expression
+# Subtract Arithmetic Expression
 #
-# + sub - Substract expression
+# + sub - Subtract expression
 public type SubExpression record {
     DoubleArithmeticExpression | StringArithmeticExpression sub;
 };
 
-# Division Arithmatic Expression
+# Division Arithmetic Expression
 #
 # + div - Division expression
 public type DivExpression record {
     DoubleArithmeticExpression div;
 };
 
-# Multiplication Arithmatic Expression
+# Multiplication Arithmetic Expression
 #
 # + mul - Multiplication expression
 public type MulExpression record {
     DoubleArithmeticExpression mul;
 };
 
-# Arithmatic Expression type
+# Arithmetic Expression type
 public type ArithmeticExpression AddExpression | SubExpression | DivExpression | MulExpression;
 
 
 # Constant used to indicate to consider case when comparing strings
-public const ORDINAL_STRING_COMPARRISON = "Ordinal";
+public const ORDINAL_STRING_COMPARISON = "Ordinal";
 
 # Constant used to indicate to ignore case when comparing strings
-public const ORDINAL_IGNORECASE_STRING_COMPARRISON = "OrdinalIgnoreCase";
+public const ORDINAL_IGNORECASE_STRING_COMPARISON = "OrdinalIgnoreCase";
 
-# Record for string comparission element in string compare expression
-public type StringComparission ORDINAL_STRING_COMPARRISON | ORDINAL_IGNORECASE_STRING_COMPARRISON;
+# Record for string comparision element in string compare expression
+public type StringComparision ORDINAL_STRING_COMPARISON | ORDINAL_IGNORECASE_STRING_COMPARISON;
 
 # Compare expression for string datatype
 #
@@ -81,17 +81,17 @@ public type StringComparission ORDINAL_STRING_COMPARRISON | ORDINAL_IGNORECASE_S
 public type StringCompareExpression record {
     Property | BuiltInProperty | string 'left;
     Property | BuiltInProperty | string 'right;
-    StringComparission stringComparison = ORDINAL_IGNORECASE_STRING_COMPARRISON;
+    StringComparision stringComparison = ORDINAL_IGNORECASE_STRING_COMPARISON;
 };
 
-# Endswith compare expression
+# Ends with compare expression
 #
 # + endsWith - A string compare expression
 public type EndsWithExpression record {
     StringCompareExpression endsWith;
 };
 
-# Startswith compare expression
+# Starts with compare expression
 #
 # + startsWith - A string compare expression
 public type StartsWithExpression record {
@@ -117,8 +117,8 @@ public type PhraseExpression record {
 # + left - Left Operand
 # + right - Right Operand
 public type BasicCompareExpression record {
-    Property | BuiltInProperty | float | string 'left;
-    Property | BuiltInProperty | float | string 'right;
+    Property | BuiltInProperty | DateTime | TimeSpan | float | string 'left;
+    Property | BuiltInProperty | DateTime | TimeSpan | float | string 'right;
 };
 
 # Greater than or equal compare expression
@@ -180,21 +180,21 @@ public type ComparisonExpression
 
 # And logical expression
 #
-# + and - A comparsion expression
+# + and - A comparision expression
 public type AndExpression record {
     ComparisonExpression[] and;
 };
 
 # Or logical expression
 #
-# + or - A comparsion expression
+# + or - A comparision expression
 public type OrExpression record {
     ComparisonExpression[] or;
 };
 
 # Not logical expression
 #
-# + not - A comparsion expression
+# + not - A comparision expression
 public type NotExpression record {
     ComparisonExpression not;
 };
