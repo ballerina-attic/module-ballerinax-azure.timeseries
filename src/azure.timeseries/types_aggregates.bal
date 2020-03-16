@@ -24,13 +24,13 @@ public type Input record {
 };
 
 # Ascending order type
-public const ORDER_ASECNDING = "Asc";
+public const ORDER_ASCENDING = "Asc";
 
 # Descending order type
 public const ORDER_DESCENDING = "Desc";
 
 # Order record
-public type Order ORDER_ASECNDING | ORDER_DESCENDING;
+public type Order ORDER_ASCENDING | ORDER_DESCENDING;
 
 # Sort type used to sort the returned results
 #
@@ -121,49 +121,49 @@ public type NumericHistogramExpression record {
 # Dimensions record type
 public type Dimension UniqueValuesExpression | DateHistogramExpression | NumericHistogramExpression;
 
-# Count mesure expression
+# Count measure expression
 # 
 # + count - Empty json
 public type CountMeasureExpression record {
     json count = {};
 };
 
-# Min mesure expression
+# Min measure expression
 # 
 # + min - Property for which min is to be found
 public type MinMeasureExpression record {
     Input min;
 };
 
-# Max mesure expression
+# Max measure expression
 # 
 # + max - Property for which max is to be found
 public type MaxMeasureExpression record {
     Input max;
 };
 
-# Avg mesure expression
+# Avg measure expression
 # 
 # + avg - Property for which avg is to be found
 public type AvgMeasureExpression record {
     Input avg;
 };
 
-# Sum mesure expression
+# Sum measure expression
 # 
 # + sum - Property for which sum is to be found
 public type SumMeasureExpression record {
     Input sum;
 };
 
-# First mesure expression
+# First measure expression
 # 
 # + first - Property for which first is to be found
 public type FirstMeasureExpression record {
     Input first;
 };
 
-# Last mesure expression
+# Last measure expression
 # 
 # + last - Property for which last is to be found
 public type LastMeasureExpression record {

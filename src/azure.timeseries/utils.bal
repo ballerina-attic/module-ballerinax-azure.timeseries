@@ -54,8 +54,8 @@ function convertToEnvironments(json[] jsonEnv) returns Environment[] {
 }
 
 
-function createAvailabilityResponse(json jsonResponse) returns @untainted AvailabiltyResponse {
-    AvailabiltyResponse response = {
+function createAvailabilityResponse(json jsonResponse) returns @untainted AvailabilityResponse {
+    AvailabilityResponse response = {
         'from: <string>jsonResponse.range.'from,
         'to: <string>jsonResponse.range.'to,
         intervalSize: <string>jsonResponse.intervalSize,

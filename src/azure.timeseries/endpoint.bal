@@ -27,7 +27,7 @@ public type InsightsClient client object {
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
             tokenUrl: AZURE_LOGIN_BASE_URL + connConfig.tenantId + "/oauth2/v2.0/token",
             clientId: connConfig.clientId,
-            clientSecret: connConfig.clientSecrect,
+            clientSecret: connConfig.clientSecret,
             scopes: [AZURE_TSI_DEFAULT_SCOPE]
 
         });
@@ -88,7 +88,7 @@ public type EnvironmentClient client object {
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
             tokenUrl: AZURE_LOGIN_BASE_URL + connConfig.tenantId + "/oauth2/v2.0/token",
             clientId: connConfig.clientId,
-            clientSecret: connConfig.clientSecrect,
+            clientSecret: connConfig.clientSecret,
             scopes: [AZURE_TSI_DEFAULT_SCOPE]
 
         });
@@ -107,8 +107,8 @@ public type EnvironmentClient client object {
 
     # Get the availability details of the environment
     #
-    # + return - AvailabiltyResponse record if successful else an error
-    public remote function getAvailability() returns AvailabiltyResponse | error {
+    # + return - AvailabilityResponse record if successful else an error
+    public remote function getAvailability() returns AvailabilityResponse | error {
 
         var httpResponse = self.environmentClient->get("/availability" + VERSION);
 
@@ -127,7 +127,7 @@ public type EnvironmentClient client object {
     }
 
 
-    # Get the Environment Metadata i.e. all properties metadata for a specific timeperiod
+    # Get the Environment Metadata i.e. all properties metadata for a specific time period
     #
     # + searchSpan - Search time interval
     # + return - Array of property records or error

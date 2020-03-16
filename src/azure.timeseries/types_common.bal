@@ -20,13 +20,13 @@ import ballerina/http;
 #
 # + tenantId - TenantId of the environments that needs to be accessed
 # + clientId - Client Id of the application that is used for authentication
-# + clientSecrect - Client secret of the application that is used for authentication
+# + clientSecret - Client secret of the application that is used for authentication
 # + timeoutInMillis - Timeout for the HTTP client used for communication
 # + proxyConfig - Proxy config if needed
 public type ConnectionConfiguration record {
     string tenantId;
     string clientId;
-    string clientSecrect;
+    string clientSecret;
     int timeoutInMillis = 60000;
     http:ProxyConfig? proxyConfig = ();
 };
@@ -96,7 +96,7 @@ public type PropertyMetaData record {
 # + to - Last time the events were received
 # + intervalSize - Interval size of the distribution of the events
 # + distribution - Th distribution along with num of events
-public type AvailabiltyResponse record {
+public type AvailabilityResponse record {
     string 'from;
     string 'to;
     string intervalSize;
@@ -180,7 +180,7 @@ public type AggregatesResponse record {
 
 # Record used to define Property in predicate/aggregates clause
 #
-# + property - Name of the propety
+# + property - Name of the property
 # + type - Data type of the property
 public type Property record {
     string property;
@@ -189,7 +189,7 @@ public type Property record {
 
 # Record used to define Built in Property in predicate/aggregates clause
 #
-# + builtInProperty - Name of the propety
+# + builtInProperty - Name of the property
 public type BuiltInProperty record {
     string builtInProperty;
 };
