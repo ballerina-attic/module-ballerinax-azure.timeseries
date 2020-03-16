@@ -1,14 +1,14 @@
 ## Module Overview
 
-The Azure Insights connector allows you to query Azure Time-series Insights through the  REST API. It also allows you access metadata on environments along with querying for events and aggregates. It handles OAuth 2.0 authentication.
+The Azure Insights connector allows you to query Azure Time-series Insights through the REST API. It also allows you to access metadata on environments along with querying for events and aggregates. It handles OAuth 2.0 authentication.
 
 ## Azure Insights Operations
 
-The `ballerinax/azure.timeseries` module allows you to perform following operations,
+The `ballerinax/azure.timeseries` module allows you to perform the following operations.
 
 - Get all available environment meta data
-- Get Environment availability
-- Get Environment metadata
+- Get environment availability
+- Get environment metadata
 - Query environment for events
 - Query environment for aggregates
 
@@ -28,7 +28,7 @@ There are 2 clients provided by Ballerina to interact with different API groups 
 1. **azure.timeseries:InsightsClient** - This client is the top-most client in the Timeseries module. 
 This can be used to get the relevant metadata associated with the environments available to the user.
 
-2. **azure.timeseries:EnvironmentClient** - Client that can be used to get metadata/query a specific environment.
+2. **azure.timeseries:EnvironmentClient** - This client can be used to get metadata or query a specific environment.
 
 ## Getting Started
 
@@ -36,7 +36,8 @@ This can be used to get the relevant metadata associated with the environments a
 Download and install [Ballerina](https://ballerinalang.org/downloads/).
 
 ### Pull the Module
-Execute the below command to pull the Azure.Timeseries module from Ballerina Central:
+Execute the below command to pull the `Azure.Timeseries` module from Ballerina Central:
+
 ```ballerina
 $ ballerina pull ballerinax/azure.timeseries
 ```

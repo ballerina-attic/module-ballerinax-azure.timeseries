@@ -44,7 +44,7 @@ public type InsightsClient client object {
         });
     }
 
-    # Get details of all the available environments
+    # Get details of all the available environments.
     #
     # + return - Array of environment records or error
     public remote function getEnvironments() returns Environment[] | error {
@@ -58,13 +58,13 @@ public type InsightsClient client object {
                 }
                 return processResBodyError(jsonResponse);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response");
+            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
         } else {
             return processResError(httpResponse);
         }
     }
 
-    # Initiate and get an environment Client
+    # Initiate and get an environment Client.
     #
     # + environmentFqdn - FQDN of the environment
     # + return - Environment client
@@ -104,9 +104,9 @@ public type EnvironmentClient client object {
         });
     }
 
-    # Get the availability details of the environment
+    # Get the availability details of the environment.
     #
-    # + return - AvailabilityResponse record if successful else an error
+    # + return - the `AvailabilityResponse` record if successful or an error
     public remote function getAvailability() returns AvailabilityResponse | error {
 
         var httpResponse = self.environmentClient->get("/availability" + VERSION);
@@ -119,13 +119,13 @@ public type EnvironmentClient client object {
                 }
                 return processResBodyError(jsonResponse);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response");
+            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
         } else {
             return processResError(httpResponse);
         }
     }
 
-    # Get the Environment Metadata i.e. all properties metadata for a specific time period
+    # Get the Environment Metadata i.e., all properties metadata for a specific time period.
     #
     # + searchSpan - Search time interval
     # + return - Array of property records or error
@@ -150,15 +150,15 @@ public type EnvironmentClient client object {
                 return processResBodyError(jsonResponse);
 
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response");
+            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
         } else {
             return processResError(httpResponse);
         }
     }
 
-    # Get the Events for a specific time interval based on any filter if needed 
+    # Get the Events for a specific time interval based on any filter if needed.
     #
-    # + eventRequest - EventRequest Record
+    # + eventRequest - the `EventRequest` Record
     # + return - Event Response record which will contain returned events and metadata or error
     public remote function getEvents(EventsRequest eventRequest) returns EventsResponse | error {
 
@@ -177,16 +177,16 @@ public type EnvironmentClient client object {
                 }
                 return processResBodyError(jsonResponse);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response");
+            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
         } else {
             return processResError(httpResponse);
         }
     }
 
-    # Get the aggregates of the data based on aggregation rules within a time interval
+    # Get the aggregates of the data based on aggregation rules within a time interval.
     #
     # + aggregateRequest - Aggregate Request Record
-    # + return - Aggregate Response record which will contain aggregates events
+    # + return - Aggregate Response record, which will contain aggregates events
     public remote function getAggregates(AggregateRequest aggregateRequest) returns AggregatesResponse | error {
 
         if (aggregateRequest.aggregates.length() != 1) {
@@ -212,7 +212,7 @@ public type EnvironmentClient client object {
                 }
                 return processResBodyError(jsonResponse);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response");
+            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
         } else {
             return processResError(httpResponse);
         }
