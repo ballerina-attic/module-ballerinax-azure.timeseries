@@ -116,30 +116,6 @@ public type Warning record {
     map<json> warningDetails?;
 };
 
-# Schema of the event from Events API
-#
-# + rid - Unique id for the schema
-# + esn - Event source name
-# + properties - Metadata of the properties present in the event
-public type Schema record {
-    int rid;
-    string esn;
-    PropertyMetaData[] properties;
-};
-
-# Event record to map the event details from the Events API
-#
-# + schema - Schema of the events if present
-# + schemaRid - Schema Rid is given if the schema is already defined in first event
-# + timestamp - Timestamp of the event
-# + values - Event values
-public type Event record {
-    Schema schema?;
-    string schemaRid?;
-    string timestamp;
-    json[] values;
-};
-
 # EventRequest datatype that is used to invoke Environment Events API
 #
 # + searchSpan - Used to indicate time interval for the query
@@ -151,13 +127,35 @@ public type EventsRequest record {
     LimitTop top;
 };
 
+# Event record to map the event details from the Events API
+#
+# + timestamp - Timestamp of the event
+# + values - Map of event values to the property names
+public type Event record {
+   string timestamp;
+   map<anydata> values;
+};
+
+# Schema Category of the event from Events API
+#
+# + rid - Unique id for the schema
+# + esn - Event source name
+# + properties - Metadata of the properties present in the event
+# + events - Event values mapped to Event record
+public type SchemaCategory record {
+    string rid;
+    string esn;
+    PropertyMetaData[] properties;
+    Event[] events;
+};
+
 # Record mapped to the Environment Events API
 #
 # + warnings - Warnings for the query if any
-# + events - Events requested
+# + category - Schema category including Schema and events
 public type EventsResponse record {
     Warning[] warnings;
-    Event[] events;
+    SchemaCategory[] category;
 };
 
 # AggregateRequest datatype that is used to invoke Environment Aggregates API

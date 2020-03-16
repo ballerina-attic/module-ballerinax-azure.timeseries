@@ -87,38 +87,63 @@ function createEventsResponse(json jsonResponse) returns @untainted (EventsRespo
     ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
     EventsResponse eventsResponse = {
         warnings: warningsArray,
-        events: convertToEvents(<json[]>jsonResponse.events)
+        category: convertToSchemaCategories(<json[]>jsonResponse.events)
     };
     return eventsResponse;
 }
 
-function convertToEvents(json[] jsonEvents) returns Event[] {
+function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
     int i = 0;
     Event[] events = [];
+
+    map <SchemaCategory> schemas = {};
+
     foreach json event in jsonEvents {
         // Casted to access fields with special characters i.e $
         map<json> eventObj = <map<json>>event;
 
-        events[i] = {
-            timestamp: eventObj["$ts"].toString(),
-            values: <json[]>event.values
-        };
+        if (eventObj.schemaRid is error) {
+            
+            PropertyMetaData[] properties = convertToProperties(<json[]> eventObj.schema.properties);
+            map<json> eventSchema = <map<json>> eventObj.schema;
 
-        if (!(event.schema is error)) {
-            PropertyMetaData[] properties = convertToProperties(<json[]>event.schema.properties);
-            map<json> eventScema = <map<json>>event.schema;
-
-            events[i].schema = {
-                rid: <int>eventScema.rid,
-                esn: eventScema["$esn"].toString(),
-                properties: properties
+            SchemaCategory schemaCategory = {
+                rid: eventSchema.rid.toString(),
+                esn: eventSchema["$esn"].toString(),
+                properties: properties,
+                events: []
             };
+        
+            schemaCategory.events.push(populateEvent(eventObj, properties));
+            schemas[eventSchema.rid.toString()] = schemaCategory;
+
         } else {
-            events[i].schemaRid = event.schemaRid.toString();
+            SchemaCategory schema = schemas.get(eventObj.schemaRid.toString());
+            schema.events.push(populateEvent(eventObj, schema.properties));
+
         }
         i = i + 1;
     }
-    return events;
+    return schemas.toArray();
+}
+
+function populateEvent(map<json> eventObj, PropertyMetaData[] properties) returns @untainted Event {
+    map <anydata> eventValues = {};
+    json[] values = <json[]> eventObj.values;
+
+    int j = 0;
+    foreach json value in values {
+        string propertyName = properties[j].name;
+        eventValues[propertyName] = value;
+        j = j + 1;
+    }
+
+    Event eventValue = {
+        timestamp: eventObj["$ts"].toString(),
+        values: eventValues
+    };
+    
+    return eventValue;
 }
 
 function createAggregateResponse(json jsonResponse) returns @untainted (AggregatesResponse | error) {
