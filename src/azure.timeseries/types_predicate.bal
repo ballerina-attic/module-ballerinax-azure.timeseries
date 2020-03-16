@@ -28,8 +28,8 @@ public type DoubleArithmeticExpression record {
 # + left - Left operand
 # + right - Right operand
 public type StringArithmeticExpression record {
-    Property | BuiltInProperty | string 'left;
-    Property | BuiltInProperty | string 'right;
+    Property | BuiltInProperty | DateTime | TimeSpan | string 'left;
+    Property | BuiltInProperty | DateTime | TimeSpan | string 'right;
 };
 
 # Add Arithmatic Expression
@@ -117,8 +117,8 @@ public type PhraseExpression record {
 # + left - Left Operand
 # + right - Right Operand
 public type BasicCompareExpression record {
-    Property | BuiltInProperty | float | string 'left;
-    Property | BuiltInProperty | float | string 'right;
+    Property | BuiltInProperty | DateTime | TimeSpan | float | string 'left;
+    Property | BuiltInProperty | DateTime | TimeSpan | float | string 'right;
 };
 
 # Greater than or equal compare expression

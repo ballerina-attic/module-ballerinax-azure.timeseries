@@ -65,6 +65,13 @@ public type DateTime record {
     string dateTime;
 };
 
+# TimeSpan datatype
+#
+# + timeSpan - Timespan object
+public type TimeSpan record {
+    string timeSpan;
+};
+
 # Search span record used to indicate time interval for the query
 #
 # + from - The start time of the interval
