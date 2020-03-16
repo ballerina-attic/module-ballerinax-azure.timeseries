@@ -204,5 +204,3 @@ public type LogicalExpression AndExpression | OrExpression | NotExpression;
 
 # Predicate Clause type
 public type Predicate LogicalExpression | ComparisonExpression;
-
-

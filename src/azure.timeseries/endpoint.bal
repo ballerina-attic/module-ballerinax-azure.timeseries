@@ -44,7 +44,6 @@ public type InsightsClient client object {
         });
     }
 
-
     # Get details of all the available environments
     #
     # + return - Array of environment records or error
@@ -125,7 +124,6 @@ public type EnvironmentClient client object {
             return processResError(httpResponse);
         }
     }
-
 
     # Get the Environment Metadata i.e. all properties metadata for a specific timeperiod
     #

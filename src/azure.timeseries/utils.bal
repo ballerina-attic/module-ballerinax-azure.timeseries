@@ -146,5 +146,3 @@ function convertToWarnings(json[] jsonWarning) returns Warning[] {
     }
     return warnings;
 }
-
-

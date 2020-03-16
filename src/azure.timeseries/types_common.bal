@@ -188,5 +188,3 @@ public type Property record {
 public type BuiltInProperty record {
     string builtInProperty;
 };
-
-

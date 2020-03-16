@@ -19,4 +19,3 @@ jobs:
                   TENANT_ID: ${{ secrets.TENANT_ID }}
                   CLIENT_ID: ${{ secrets.CLIENT_ID }}
                   CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-
