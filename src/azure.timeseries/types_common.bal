@@ -96,13 +96,6 @@ public type AvailabiltyResponse record {
     map<json> distribution;
 };
 
-# Record for the Metadata API request (Internal use)
-#
-# + searchSpan - Search span for the request
-public type MetaDataRequest record {
-    SearchSpan searchSpan;
-};
-
 # Warnings available in the query response if any
 #
 # + code - predefined warning codes

@@ -17,7 +17,7 @@
 # Record used to indicate Arithmatic expression with operands of type Double
 #
 # + left - Left operand
-# +right - Right operand
+# + right - Right operand
 public type DoubleArithmeticExpression record {
     Property | BuiltInProperty | float 'left;
     Property | BuiltInProperty | float 'right;
@@ -26,7 +26,7 @@ public type DoubleArithmeticExpression record {
 # Record used to indicate Arithmatic expression with operands of type DateTime/Timespan
 #
 # + left - Left operand
-# +right - Right operand
+# + right - Right operand
 public type StringArithmeticExpression record {
     Property | BuiltInProperty | string 'left;
     Property | BuiltInProperty | string 'right;
@@ -36,7 +36,7 @@ public type StringArithmeticExpression record {
 #
 # + add - Add expression
 public type AddExpression record {
-    DoubleArithmeticExpression| StringArithmeticExpression add;
+    DoubleArithmeticExpression | StringArithmeticExpression add;
 };
 
 # Substract Arithmatic Expression

@@ -215,3 +215,6 @@ public type EnvironmentClient client object {
 
 };
 
+public type MetaDataRequest record {
+    SearchSpan searchSpan;
+};
