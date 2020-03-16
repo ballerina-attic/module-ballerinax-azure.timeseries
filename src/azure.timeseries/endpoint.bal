@@ -191,6 +191,13 @@ public type EnvironmentClient client object {
     # + return - Aggregate Response record which will contain aggregates events
     public remote function getAggregates(AggregateRequest aggregateRequest) returns AggregatesResponse | error {
 
+        if (aggregateRequest.aggregates.length() != 1) {
+            return error(ERROR_CODE, message = "Aggregate request only supports one aggregate clause. More than" +  
+            "one aggregate clause has to be added as inner aggregates."); 
+        }
+
+        // todo Validate for either measure/aggregates clause.
+
         json eventsReqPayload = check json.constructFrom(aggregateRequest);
 
         http:Request request = new;
@@ -217,4 +224,11 @@ public type EnvironmentClient client object {
 
 public type MetaDataRequest record {
     SearchSpan searchSpan;
+};
+
+
+public type AggregatesAPI record {
+    Dimension dimension;
+    Measure[]  measures?;
+    Aggregates aggregates?;
 };
