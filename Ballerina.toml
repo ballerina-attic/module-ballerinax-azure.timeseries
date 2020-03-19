@@ -2,6 +2,6 @@
 org-name = "ballerinax"
 version = "1.0.0"
 license= ["Apache-2.0"]
-authors = ["WSO2"]
+authors = ["Ballerina"]
 keywords = ["azure", "time-series", "insights"]
 repository = "https://github.com/ballerina-platform/module-azuretimeseries"
