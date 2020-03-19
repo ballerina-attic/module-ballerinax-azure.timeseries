@@ -16,7 +16,7 @@ The `ballerinax/azure.timeseries` module allows you to perform the following ope
 
 |                             |       Versions              |
 |:---------------------------:|:---------------------------:|
-| Ballerina Language          | 1.1.x                       |
+| Ballerina Language          | 1.2.x                       |
 | Azure Time-series Insights API          | 2016-12-12                  |
 
 ## Feature Overview
@@ -33,7 +33,7 @@ This can be used to get the relevant metadata associated with the environments a
 ## Getting Started
 
 ### Prerequisites
-Download and install [Ballerina](https://ballerinalang.org/downloads/).
+Download and install [Ballerina](https://ballerina.io/downloads/).
 
 ### Pull the Module
 Execute the below command to pull the `Azure.Timeseries` module from Ballerina Central:
@@ -49,7 +49,7 @@ The EnvironmentClient `getEvents()` remote function can be used to query events 
 ```ballerina
 import ballerina/log;
 import ballerinax/azure.timeseries;
-azure.timeseries:ConnectionConfiguration connConfig = {
+timeseries:ConnectionConfiguration connConfig = {
     tenantId: <tenant Id>,
     clientId: <client id>,
     clientSecrect: <client secrect>
@@ -57,7 +57,7 @@ azure.timeseries:ConnectionConfiguration connConfig = {
 
 public function main() {
     
-    azure.timeseries:EnvironmentClient environmentClient = new(<envFQDN>, connConfig);
+    timeseries:EnvironmentClient environmentClient = new(<envFQDN>, connConfig);
     
     EventsRequest eventsRequest = {
         searchSpan: {
