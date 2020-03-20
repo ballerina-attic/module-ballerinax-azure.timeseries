@@ -102,15 +102,6 @@ function testAzureInsightsGetEvents() {
                 dateTime: "2021-12-30T00:00:00.000Z"
             }
         },
-        predicate: {
-            eq: {
-        'left: {
-            property: "tags.http.status_code",
-            'type: DOUBLE_DATA_TYPE
-        },
-        'right: 404
-            }
-        },
         top: {
             sort: [
                 {
