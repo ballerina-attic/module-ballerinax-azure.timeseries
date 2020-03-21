@@ -38,10 +38,10 @@ function testAzureInsightsEnvironments() {
     io:println("-----------------Test case for get Environment availability------------------");
     var response = insightsClient->getEnvironments();
 
-    io:println(response);
     if (response is Environment[]) {
         test:assertTrue(true, "Availability Response received");
     } else {
+        io:println(response);
         test:assertFail("Availability API call fails");
     }
 }
@@ -53,10 +53,10 @@ function testAzureInsightsAPIAvailability() {
     io:println("-----------------Test case for get Environment availability------------------");
     var response = environmentClient->getAvailability();
 
-    io:println(response);
     if (response is AvailabilityResponse) {
         test:assertTrue(true, "Availability Response received");
     } else {
+        io:println(response);
         test:assertFail("Availability API call fails");
     }
 }
@@ -78,10 +78,10 @@ function testAzureInsightsGetMetaData() {
 
     var response = environmentClient->getMetaData(request);
 
-    io:println(response);
     if (response is PropertyMetaData[]) {
         test:assertTrue(true, "Availability Response received");
     } else {
+        io:println(response);
         test:assertFail("Availability API call fails");
     }
 }
@@ -117,10 +117,10 @@ function testAzureInsightsGetEvents() {
 
     var response = environmentClient->getEvents(eventsRequest);
 
-    io:println(response);
     if (response is EventsResponse) {
         test:assertTrue(true, "Events received");
     } else {
+        io:println(response);
         test:assertFail("Event API call fails");
     }
 }
@@ -162,10 +162,10 @@ function testAzureInsightsGetAggregates() {
 
     var response = environmentClient->getAggregates(aggregateRequest);
 
-    io:println(response);
     if (response is AggregatesResponse) {
         test:assertTrue(true, "Events received");
     } else {
+        io:println(response);
         test:assertFail("Event API call fails");
     }
 }
