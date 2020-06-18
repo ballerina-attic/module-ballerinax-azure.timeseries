@@ -21,7 +21,7 @@ public type InsightsClient client object {
     private http:Client insightsClient;
     private ConnectionConfiguration config;
 
-    public function __init(ConnectionConfiguration connConfig) {
+    public function init(ConnectionConfiguration connConfig) {
         self.config = connConfig;
 
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
@@ -56,11 +56,11 @@ public type InsightsClient client object {
                 if (httpResponse.statusCode == http:STATUS_OK) {
                     return createEnvironments(jsonResponse);
                 }
-                return processResBodyError(jsonResponse);
+                return processInvalidStatusCode(httpResponse, ENVIRONMENTS_API);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
+            return processInvalidPayloadFormat(httpResponse, ENVIRONMENTS_API);
         } else {
-            return processResError(httpResponse);
+            return processErrorResponse(httpResponse, ENVIRONMENTS_API);
         }
     }
 
@@ -81,7 +81,7 @@ public type EnvironmentClient client object {
     public http:Client environmentClient;
     public string BASE_URL;
 
-    public function __init(string envFQDN, ConnectionConfiguration connConfig) {
+    public function init(string envFQDN, ConnectionConfiguration connConfig) {
         self.BASE_URL = "https://" + envFQDN;
 
         oauth2:OutboundOAuth2Provider oauth2Provider = new ({
@@ -117,11 +117,11 @@ public type EnvironmentClient client object {
                 if (httpResponse.statusCode == http:STATUS_OK) {
                     return createAvailabilityResponse(jsonResponse);
                 }
-                return processResBodyError(jsonResponse);
+                return processInvalidStatusCode(httpResponse, AVAILABILITY_API);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
+            return processInvalidPayloadFormat(httpResponse, AVAILABILITY_API);
         } else {
-            return processResError(httpResponse);
+            return processErrorResponse(httpResponse, AVAILABILITY_API);
         }
     }
 
@@ -134,7 +134,7 @@ public type EnvironmentClient client object {
         MetaDataRequest metaDataRequest = {
             searchSpan: searchSpan
         };
-        json eventsReqPayload = check json.constructFrom(metaDataRequest);
+        json eventsReqPayload = check metaDataRequest.cloneWithType(json);
 
         http:Request request = new;
         request.setJsonPayload(eventsReqPayload);
@@ -147,12 +147,11 @@ public type EnvironmentClient client object {
                 if (httpResponse.statusCode == http:STATUS_OK) {
                     return createPropertiesArray(jsonResponse);
                 }
-                return processResBodyError(jsonResponse);
-
+                return processInvalidStatusCode(httpResponse, METADATA_API);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
+            return processInvalidPayloadFormat(httpResponse, METADATA_API);
         } else {
-            return processResError(httpResponse);
+            return processErrorResponse(httpResponse, METADATA_API);
         }
     }
 
@@ -162,7 +161,7 @@ public type EnvironmentClient client object {
     # + return - Event Response record which will contain returned events and metadata or error
     public remote function getEvents(EventsRequest eventRequest) returns EventsResponse | error {
 
-        json eventsReqPayload = check json.constructFrom(eventRequest);
+        json eventsReqPayload = check eventRequest.cloneWithType(json);
 
         http:Request request = new;
         request.setJsonPayload(eventsReqPayload);
@@ -175,11 +174,11 @@ public type EnvironmentClient client object {
                 if (httpResponse.statusCode == http:STATUS_OK) {
                     return createEventsResponse(jsonResponse);
                 }
-                return processResBodyError(jsonResponse);
+                return processInvalidStatusCode(httpResponse, EVENTS_API);
             }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
+            return processInvalidPayloadFormat(httpResponse, EVENTS_API);
         } else {
-            return processResError(httpResponse);
+            return processErrorResponse(httpResponse, EVENTS_API);
         }
     }
 
@@ -190,13 +189,13 @@ public type EnvironmentClient client object {
     public remote function getAggregates(AggregateRequest aggregateRequest) returns AggregatesResponse | error {
 
         if (aggregateRequest.aggregates.length() != 1) {
-            return error(ERROR_CODE, message = "Aggregate request only supports one aggregate clause. More than" +
+            return error("Aggregate request only supports one aggregate clause. More than" +
             "one aggregate clause has to be added as inner aggregates.");
         }
 
         // todo Validate for either measure/aggregates clause.
 
-        json eventsReqPayload = check json.constructFrom(aggregateRequest);
+        json eventsReqPayload = check aggregateRequest.cloneWithType(json);
 
         http:Request request = new;
         request.setJsonPayload(eventsReqPayload);
@@ -210,11 +209,11 @@ public type EnvironmentClient client object {
                 if (httpResponse.statusCode == http:STATUS_OK) {
                     return createAggregateResponse(jsonResponse);
                 }
-                return processResBodyError(jsonResponse);
-            }
-            return error(ERROR_CODE, message = "Error occurred while accessing the JSON payload of the response.");
+                return processInvalidStatusCode(httpResponse, AGGREGATES_API);
+            } 
+            return processInvalidPayloadFormat(httpResponse, AGGREGATES_API);
         } else {
-            return processResError(httpResponse);
+            return processErrorResponse(httpResponse, AGGREGATES_API);
         }
     }
 

@@ -2,7 +2,7 @@
 
 | Ballerina Language Version  | Azure Insights API Version |
 | ----------------------------| -------------------------------|
-|  1.2.0                      |   2016-12-12                           |
+|  swan-lake-preview1                      |   2016-12-12                           |
 
 ## Prerequisites
 
@@ -18,17 +18,17 @@
 
 You can use the `test.bal` file to test all the connector actions by following the below steps:
 
-1. Create ballerina.conf file in module-azuretimeseries.
+1. Create ballerina.conf file in module-ballerinax-azure.timeseries.
 2. Obtain the environment fqdn, client Id, client secret, and tenant id (available in azure portal after prerequisites) and add those values in the ballerina.conf file.
 
     ```conf
-    ENV_FQDN = <Environment FQDN>
-    TENANT_ID = <TENANT_ID>
-    CLIENT_ID = <CLIENT_ID>
-    CLIENT_SECRET = <CLIENT_SECRET>
+    ENV_FQDN = "<Environment FQDN>"
+    TENANT_ID = "<TENANT_ID>"
+    CLIENT_ID = "<CLIENT_ID>"
+    CLIENT_SECRET = "<CLIENT_SECRET>"
     ```
 
-3. Navigate to the folder `module-azuretimeseries`.
+3. Navigate to the folder `module-ballerinax-azure.timeseries`.
 4. Run the following commands to execute the tests.
 
     ```cmd

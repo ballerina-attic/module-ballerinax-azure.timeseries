@@ -12,15 +12,20 @@
 // "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
+import ballerina/http;
 
-function processResError(error errorResponse) returns @untainted error {
-    error err = error(ERROR_CODE, message = <string>errorResponse.detail()?.message);
-    return err;
+function processErrorResponse(error errorResponse, TIMESERIES_API apiName) returns @untainted error {
+    return error("Error invoking '" + apiName.toString() + "'.", cause = errorResponse);
 }
 
-function processResBodyError(json errorResponse) returns @untainted error {
-    error err = error(ERROR_CODE, message = errorResponse.toString());
-    return err;
+function processInvalidPayloadFormat(http:Response response, TIMESERIES_API apiName) returns @untainted error {
+    return error("Invalid response format from '" + apiName.toString() + "', expecting 'JSON'. Payload: " + 
+                response.getTextPayload().toString());
+}
+
+function processInvalidStatusCode(http:Response response, TIMESERIES_API apiName) returns @untainted error {
+    return error("Invalid response from '" + apiName.toString() + "'. Status code: " + response.statusCode.toString() + 
+                ", payload: " + response.getTextPayload().toString());
 }
 
 function createEnvironments(json jsonResponse) returns @untainted (Environment[] | error) {
