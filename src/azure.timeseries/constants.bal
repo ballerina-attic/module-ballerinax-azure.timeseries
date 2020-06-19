@@ -22,7 +22,7 @@ const string AZURE_TSI_DEFAULT_SCOPE = "https://api.timeseries.azure.com//.defau
 
 const string ENVIRONMENTS_API = "Get Environments API";
 const string AVAILABILITY_API = "Get Environment Availability API";
-const string METADATA_API = "GGet Environment Metadata API";
+const string METADATA_API = "Get Environment Metadata API";
 const string EVENTS_API = "Get Environment Events API";
 const string AGGREGATES_API = "Get Environment Aggregates API";
 
