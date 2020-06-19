@@ -166,6 +166,6 @@ function testAzureInsightsGetAggregates() {
         test:assertTrue(true, "Aggregate Events received");
     } else {
         io:println(response);
-        test:assertFail("Aggreagate Event API call fails");
+        test:assertFail("Aggregate Event API call fails");
     }
 }

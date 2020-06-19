@@ -104,7 +104,7 @@ function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
     map <SchemaCategory> schemas = {};
 
     foreach json event in jsonEvents {
-        // Casted to access fields with special characters i.e $
+        // Cast to access fields with special characters i.e $
         map<json> eventObj = <map<json>>event;
 
         if (eventObj.schemaRid is error) {

@@ -68,12 +68,12 @@ public type ArithmeticExpression AddExpression | SubExpression | DivExpression |
 public const ORDINAL_STRING_COMPARISON = "Ordinal";
 
 # Constant used to indicate to ignore case when comparing strings
-public const ORDINAL_IGNORECASE_STRING_COMPARISON = "OrdinalIgnoreCase";
+public const ORDINAL_IGNORE_CASE_STRING_COMPARISON = "OrdinalIgnoreCase";
 
-# Record for string comparision element in string compare expression
-public type StringComparision ORDINAL_STRING_COMPARISON | ORDINAL_IGNORECASE_STRING_COMPARISON;
+# Record for string comparison element in string compare expression
+public type StringComparison ORDINAL_STRING_COMPARISON | ORDINAL_IGNORE_CASE_STRING_COMPARISON;
 
-# Compare expression for string datatype
+# Compare expression for string data type
 #
 # + left - Left Operand
 # + right - Right Operand
@@ -81,7 +81,7 @@ public type StringComparision ORDINAL_STRING_COMPARISON | ORDINAL_IGNORECASE_STR
 public type StringCompareExpression record {
     Property | BuiltInProperty | string 'left;
     Property | BuiltInProperty | string 'right;
-    StringComparision stringComparison = ORDINAL_IGNORECASE_STRING_COMPARISON;
+    StringComparison stringComparison = ORDINAL_IGNORE_CASE_STRING_COMPARISON;
 };
 
 # Ends with compare expression
