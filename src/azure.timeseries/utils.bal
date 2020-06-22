@@ -15,7 +15,7 @@
 import ballerina/http;
 
 function processErrorResponse(error errorResponse, TIMESERIES_API apiName) returns @untainted error {
-    return error("Error invoking '" + apiName.toString() + "'.", cause = errorResponse);
+    return error("Error invoking '" + apiName.toString() + "'.", errorResponse);
 }
 
 function processInvalidPayloadFormat(http:Response response, TIMESERIES_API apiName) returns @untainted error {
