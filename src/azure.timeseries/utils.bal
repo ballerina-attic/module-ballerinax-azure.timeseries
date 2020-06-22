@@ -19,16 +19,16 @@ function processErrorResponse(error errorResponse, TIMESERIES_API apiName) retur
 }
 
 function processInvalidPayloadFormat(http:Response response, TIMESERIES_API apiName) returns @untainted error {
-    return error("Invalid response format from '" + apiName.toString() + "', expecting 'JSON'. Payload: " + 
-                response.getTextPayload().toString());
+    return error("Invalid response format from '" + apiName.toString() + "', expecting 'JSON'. Payload: " +
+        response.getTextPayload().toString());
 }
 
 function processInvalidStatusCode(http:Response response, TIMESERIES_API apiName) returns @untainted error {
-    return error("Invalid response from '" + apiName.toString() + "'. Status code: " + response.statusCode.toString() + 
-                ", payload: " + response.getTextPayload().toString());
+    return error("Invalid response from '" + apiName.toString() + "'. Status code: " + response.statusCode.toString() +
+        ", payload: " + response.getTextPayload().toString());
 }
 
-function createEnvironments(json jsonResponse) returns @untainted (Environment[] | error) {
+function createEnvironments(json jsonResponse) returns @untainted (Environment[]|error) {
     Environment[] environments = convertToEnvironments(<json[]>jsonResponse.environments);
     return environments;
 }
@@ -69,7 +69,7 @@ function createAvailabilityResponse(json jsonResponse) returns @untainted Availa
     return response;
 }
 
-function createPropertiesArray(json jsonResponse) returns @untainted (PropertyMetaData[] | error) {
+function createPropertiesArray(json jsonResponse) returns @untainted (PropertyMetaData[]|error) {
     PropertyMetaData[] properties = convertToProperties(<json[]>jsonResponse.properties);
     return properties;
 }
@@ -80,16 +80,16 @@ function convertToProperties(json[] jsonProperties) returns PropertyMetaData[] {
     foreach json property in jsonProperties {
         properties[i] = {
             name: property.name.toString(),
-            'type: <DataType> property.'type
+            'type: <DataType>property.'type
         };
         i = i + 1;
     }
     return properties;
 }
 
-function createEventsResponse(json jsonResponse) returns @untainted (EventsResponse | error) {
+function createEventsResponse(json jsonResponse) returns @untainted (EventsResponse|error) {
     Warning[] warningsArray = !(jsonResponse.warnings is error)
-    ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
+        ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
     EventsResponse eventsResponse = {
         warnings: warningsArray,
         category: convertToSchemaCategories(<json[]>jsonResponse.events)
@@ -101,16 +101,16 @@ function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
     int i = 0;
     Event[] events = [];
 
-    map <SchemaCategory> schemas = {};
+    map<SchemaCategory> schemas = {};
 
     foreach json event in jsonEvents {
         // Cast to access fields with special characters i.e $
         map<json> eventObj = <map<json>>event;
 
         if (eventObj.schemaRid is error) {
-            
-            PropertyMetaData[] properties = convertToProperties(<json[]> eventObj.schema.properties);
-            map<json> eventSchema = <map<json>> eventObj.schema;
+
+            PropertyMetaData[] properties = convertToProperties(<json[]>eventObj.schema.properties);
+            map<json> eventSchema = <map<json>>eventObj.schema;
 
             SchemaCategory schemaCategory = {
                 rid: eventSchema.rid.toString(),
@@ -118,7 +118,7 @@ function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
                 properties: properties,
                 events: []
             };
-        
+
             schemaCategory.events.push(populateEvent(eventObj, properties));
             schemas[eventSchema.rid.toString()] = schemaCategory;
 
@@ -133,8 +133,8 @@ function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
 }
 
 function populateEvent(map<json> eventObj, PropertyMetaData[] properties) returns @untainted Event {
-    map <anydata> eventValues = {};
-    json[] values = <json[]> eventObj.values;
+    map<anydata> eventValues = {};
+    json[] values = <json[]>eventObj.values;
 
     int j = 0;
     foreach json value in values {
@@ -147,13 +147,13 @@ function populateEvent(map<json> eventObj, PropertyMetaData[] properties) return
         timestamp: eventObj["$ts"].toString(),
         values: eventValues
     };
-    
+
     return eventValue;
 }
 
-function createAggregateResponse(json jsonResponse) returns @untainted (AggregatesResponse | error) {
+function createAggregateResponse(json jsonResponse) returns @untainted (AggregatesResponse|error) {
     Warning[] warningsArray = !(jsonResponse.warnings is error)
-    ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
+        ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
     AggregatesResponse aggregateResponse = {
         warnings: warningsArray,
         aggregates: <json[]>jsonResponse.aggregates

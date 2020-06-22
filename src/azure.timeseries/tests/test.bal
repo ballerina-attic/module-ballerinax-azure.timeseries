@@ -15,8 +15,8 @@
 // under the License.
 
 import ballerina/config;
-import ballerina/system;
 import ballerina/io;
+import ballerina/system;
 import ballerina/test;
 
 string tenantId = config:getAsString("TENANT_ID") == "" ? system:getEnv("TENANT_ID") : config:getAsString("TENANT_ID");
@@ -104,13 +104,13 @@ function testAzureInsightsGetEvents() {
         },
         top: {
             sort: [
-                {
-                    input: {
-                        builtInProperty: "$ts"
-                    },
-                    'order: ORDER_DESCENDING
-                }
-            ],
+                    {
+                        input: {
+                            builtInProperty: "$ts"
+                        },
+                        'order: ORDER_DESCENDING
+                    }
+                ],
             count: 5
         }
     };
@@ -142,22 +142,24 @@ function testAzureInsightsGetAggregates() {
             }
         },
         aggregates: [
-            {
-                dimension: {
-                    dateHistogram: {
-                        input: {
-                            builtInProperty: "$ts"
-                        },
-                        breaks: {
-                            size: "1m"
+                {
+                    dimension: {
+                        dateHistogram: {
+                            input: {
+                                builtInProperty: "$ts"
+                            },
+                            breaks: {
+                                size: "1m"
+                            }
                         }
-                    }
-                },
-                measures: [{
-                    count: {}
-                }]
-            }
-        ]
+                    },
+                    measures: [
+                        {
+                            count: {}
+                        }
+                    ]
+                }
+            ]
     };
 
     var response = environmentClient->getAggregates(aggregateRequest);

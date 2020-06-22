@@ -56,7 +56,7 @@ public const DATETIME_DATA_TYPE = "DateTime";
 
 public const TIMESPAN_DATA_TYPE = "TimeSpan";
 
-public type DataType BOOL_DATA_TYPE| STRING_DATA_TYPE| DOUBLE_DATA_TYPE| DATETIME_DATA_TYPE|TIMESPAN_DATA_TYPE;
+public type DataType BOOL_DATA_TYPE|STRING_DATA_TYPE|DOUBLE_DATA_TYPE|DATETIME_DATA_TYPE|TIMESPAN_DATA_TYPE;
 
 # DateTime datatype used in SearchSpan
 #
@@ -132,8 +132,8 @@ public type EventsRequest record {
 # + timestamp - Timestamp of the event
 # + values - Map of event values to the property names
 public type Event record {
-   string timestamp;
-   map<anydata> values;
+    string timestamp;
+    map<anydata> values;
 };
 
 # Schema Category of the event from Events API

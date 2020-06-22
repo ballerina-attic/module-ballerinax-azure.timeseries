@@ -19,8 +19,8 @@
 # + left - Left operand
 # + right - Right operand
 public type DoubleArithmeticExpression record {
-    Property | BuiltInProperty | float 'left;
-    Property | BuiltInProperty | float 'right;
+    Property|BuiltInProperty|float 'left;
+    Property|BuiltInProperty|float 'right;
 };
 
 # Record used to indicate Arithmetic expression with operands of type DateTime/Timespan
@@ -28,22 +28,22 @@ public type DoubleArithmeticExpression record {
 # + left - Left operand
 # + right - Right operand
 public type StringArithmeticExpression record {
-    Property | BuiltInProperty | DateTime | TimeSpan | string 'left;
-    Property | BuiltInProperty | DateTime | TimeSpan | string 'right;
+    Property|BuiltInProperty|DateTime|TimeSpan|string 'left;
+    Property|BuiltInProperty|DateTime|TimeSpan|string 'right;
 };
 
 # Add Arithmetic Expression
 #
 # + add - Add expression
 public type AddExpression record {
-    DoubleArithmeticExpression | StringArithmeticExpression add;
+    DoubleArithmeticExpression|StringArithmeticExpression add;
 };
 
 # Subtract Arithmetic Expression
 #
 # + sub - Subtract expression
 public type SubExpression record {
-    DoubleArithmeticExpression | StringArithmeticExpression sub;
+    DoubleArithmeticExpression|StringArithmeticExpression sub;
 };
 
 # Division Arithmetic Expression
@@ -61,7 +61,7 @@ public type MulExpression record {
 };
 
 # Arithmetic Expression type
-public type ArithmeticExpression AddExpression | SubExpression | DivExpression | MulExpression;
+public type ArithmeticExpression AddExpression|SubExpression|DivExpression|MulExpression;
 
 
 # Constant used to indicate to consider case when comparing strings
@@ -71,7 +71,7 @@ public const ORDINAL_STRING_COMPARISON = "Ordinal";
 public const ORDINAL_IGNORE_CASE_STRING_COMPARISON = "OrdinalIgnoreCase";
 
 # Record for string comparison element in string compare expression
-public type StringComparison ORDINAL_STRING_COMPARISON | ORDINAL_IGNORE_CASE_STRING_COMPARISON;
+public type StringComparison ORDINAL_STRING_COMPARISON|ORDINAL_IGNORE_CASE_STRING_COMPARISON;
 
 # Compare expression for string data type
 #
@@ -79,8 +79,8 @@ public type StringComparison ORDINAL_STRING_COMPARISON | ORDINAL_IGNORE_CASE_STR
 # + right - Right Operand
 # + stringComparison - Indicate whether to consider/ignore case when comparing
 public type StringCompareExpression record {
-    Property | BuiltInProperty | string 'left;
-    Property | BuiltInProperty | string 'right;
+    Property|BuiltInProperty|string 'left;
+    Property|BuiltInProperty|string 'right;
     StringComparison stringComparison = ORDINAL_IGNORE_CASE_STRING_COMPARISON;
 };
 
@@ -117,36 +117,36 @@ public type PhraseExpression record {
 # + left - Left Operand
 # + right - Right Operand
 public type BasicCompareExpression record {
-    Property | BuiltInProperty | DateTime | TimeSpan | float | string 'left;
-    Property | BuiltInProperty | DateTime | TimeSpan | float | string 'right;
+    Property|BuiltInProperty|DateTime|TimeSpan|float|string 'left;
+    Property|BuiltInProperty|DateTime|TimeSpan|float|string 'right;
 };
 
 # Greater than or equal compare expression
 #
 # + gte - A basic compare expression
 public type GreaterThanOrEqualExpression record {
-    BasicCompareExpression | ArithmeticExpression gte;
+    BasicCompareExpression|ArithmeticExpression gte;
 };
 
 # Greater than compare expression
 #
 # + gt - A basic compare expression
 public type GreaterThanExpression record {
-    BasicCompareExpression | ArithmeticExpression gt;
+    BasicCompareExpression|ArithmeticExpression gt;
 };
 
 # Less than or equal compare expression
 #
 # + lte - A basic compare expression
 public type LessThanOrEqualExpression record {
-    BasicCompareExpression | ArithmeticExpression lte;
+    BasicCompareExpression|ArithmeticExpression lte;
 };
 
 # Less than compare expression
 #
 # + lt - A basic compare expression
 public type LessThanExpression record {
-    BasicCompareExpression | ArithmeticExpression lt;
+    BasicCompareExpression|ArithmeticExpression lt;
 };
 
 # Compare expression including boolean type
@@ -154,29 +154,29 @@ public type LessThanExpression record {
 # + left - Left Operand
 # + right - Right Operand
 public type CompareExpression record {
-    Property | BuiltInProperty | boolean | float | string 'left;
-    Property | BuiltInProperty | boolean | float | string 'right;
+    Property|BuiltInProperty|boolean|float|string 'left;
+    Property|BuiltInProperty|boolean|float|string 'right;
 };
 
 # Equal Any (in) compare expression
 #
 # + in - A compare expression
 public type EqualAnyExpression record {
-    CompareExpression | ArithmeticExpression 'in;
+    CompareExpression|ArithmeticExpression 'in;
 };
 
 # Equal compare expression
 #
 # + eq - A compare expression
 public type EqualExpression record {
-    CompareExpression | ArithmeticExpression eq;
+    CompareExpression|ArithmeticExpression eq;
 };
 
 # ComparisonExpression Expression type
 public type ComparisonExpression
- EqualExpression | EqualAnyExpression | LessThanExpression | LessThanOrEqualExpression |
- GreaterThanExpression | GreaterThanOrEqualExpression | PhraseExpression | RegexExpression |
- StartsWithExpression | EndsWithExpression;
+     EqualExpression|EqualAnyExpression|LessThanExpression|LessThanOrEqualExpression|
+     GreaterThanExpression|GreaterThanOrEqualExpression|PhraseExpression|RegexExpression|
+     StartsWithExpression|EndsWithExpression;
 
 # And logical expression
 #
@@ -200,7 +200,7 @@ public type NotExpression record {
 };
 
 # LogicalExpression Expression type
-public type LogicalExpression AndExpression | OrExpression | NotExpression;
+public type LogicalExpression AndExpression|OrExpression|NotExpression;
 
 # Predicate Clause type
-public type Predicate LogicalExpression | ComparisonExpression;
+public type Predicate LogicalExpression|ComparisonExpression;
