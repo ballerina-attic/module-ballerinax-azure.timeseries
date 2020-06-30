@@ -52,14 +52,14 @@ The EnvironmentClient `getEvents()` remote function can be used to query events 
 import ballerina/log;
 import ballerinax/azure.timeseries;
 timeseries:ConnectionConfiguration connConfig = {
-    tenantId: <tenant Id>,
-    clientId: <client id>,
-    clientSecret: <client secret>
+    tenantId: <Tenant Id>,
+    clientId: <Client id>,
+    clientSecret: <Client secret>
 };
 
 public function main() {
 
-    timeseries:EnvironmentClient environmentClient = new(<envFQDN>, connConfig);
+    timeseries:EnvironmentClient environmentClient = new(<Environment FQDN>, connConfig);
 
     EventsRequest eventsRequest = {
         searchSpan: {
