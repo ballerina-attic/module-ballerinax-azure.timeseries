@@ -23,9 +23,9 @@ The `ballerinax/azure.timeseries` module allows you to perform the following ope
 
 ## Azure Insights Clients
 
-There are 2 clients provided by Ballerina to interact with different API groups of the Timeseries Insights REST API. 
+There are 2 clients provided by Ballerina to interact with different API groups of the Timeseries Insights REST API.
 
-1. **azure.timeseries:InsightsClient** - This client is the top-most client in the Timeseries module. 
+1. **azure.timeseries:InsightsClient** - This client is the top-most client in the Timeseries module.
 This can be used to get the relevant metadata associated with the environments available to the user.
 
 2. **azure.timeseries:EnvironmentClient** - This client can be used to get metadata or query a specific environment.
@@ -48,7 +48,7 @@ You can define the Connection configuration and create the Environment client as
 azure.timeseries:ConnectionConfiguration connConfig = {
     tenantId: <tenant Id>,
     clientId: <client id>,
-    clientSecrect: <client secrect>
+    clientSecret: <client secret>
 };
 // Create the Environment client.
 azure.timeseries:EnvironmentClient environmentClient = new(<envFQDN>, connConfig);
@@ -71,7 +71,7 @@ EventsRequest eventsRequest = {
     predicate: {
         eq: {
     'left: {
-        property: "lattitude",
+        property: "latitude",
         'type: "Double"
     },
     'right: 3.14
@@ -94,7 +94,7 @@ var response = environmentClient->getEvents(eventsRequest);
 if (response is EventsResponse) {
     io:println("Events " + response.events);
 } else {
-    io:println(response.detail()?.message.toString());
+    io:println(response.message());
 }
 ```
 
@@ -135,9 +135,9 @@ var response = environmentClient->getAggregates(aggregateRequest);
 
 io:println(response);
 if (response is AggregatesResponse) {
-    io:println("Aggregates " + response.aggregaaggregatestes);
+    io:println("Aggregates " + response.aggregates);
 } else {
-    io:println(response.detail()?.message.toString());
+    io:println(response.message());
 }
 
 ```

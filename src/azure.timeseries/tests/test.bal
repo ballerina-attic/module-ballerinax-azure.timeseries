@@ -15,8 +15,8 @@
 // under the License.
 
 import ballerina/config;
-import ballerina/system;
 import ballerina/io;
+import ballerina/system;
 import ballerina/test;
 
 string tenantId = config:getAsString("TENANT_ID") == "" ? system:getEnv("TENANT_ID") : config:getAsString("TENANT_ID");
@@ -35,14 +35,14 @@ EnvironmentClient environmentClient = new EnvironmentClient(envFQDN, connConfig)
 
 @test:Config {}
 function testAzureInsightsEnvironments() {
-    io:println("-----------------Test case for get Environment availability------------------");
+    io:println("-----------------Test case for get Environments------------------");
     var response = insightsClient->getEnvironments();
 
     if (response is Environment[]) {
-        test:assertTrue(true, "Availability Response received");
+        test:assertTrue(true, "Environments Response received");
     } else {
         io:println(response);
-        test:assertFail("Availability API call fails");
+        test:assertFail("Get Environments API call fails");
     }
 }
 
@@ -79,10 +79,10 @@ function testAzureInsightsGetMetaData() {
     var response = environmentClient->getMetaData(request);
 
     if (response is PropertyMetaData[]) {
-        test:assertTrue(true, "Availability Response received");
+        test:assertTrue(true, "Meta data Response received");
     } else {
         io:println(response);
-        test:assertFail("Availability API call fails");
+        test:assertFail("Meta data API call fails");
     }
 }
 
@@ -104,13 +104,13 @@ function testAzureInsightsGetEvents() {
         },
         top: {
             sort: [
-                {
-                    input: {
-                        builtInProperty: "$ts"
-                    },
-                    'order: ORDER_DESCENDING
-                }
-            ],
+                    {
+                        input: {
+                            builtInProperty: "$ts"
+                        },
+                        'order: ORDER_DESCENDING
+                    }
+                ],
             count: 5
         }
     };
@@ -142,30 +142,32 @@ function testAzureInsightsGetAggregates() {
             }
         },
         aggregates: [
-            {
-                dimension: {
-                    dateHistogram: {
-                        input: {
-                            builtInProperty: "$ts"
-                        },
-                        breaks: {
-                            size: "1m"
+                {
+                    dimension: {
+                        dateHistogram: {
+                            input: {
+                                builtInProperty: "$ts"
+                            },
+                            breaks: {
+                                size: "1m"
+                            }
                         }
-                    }
-                },
-                measures: [{
-                    count: {}
-                }]
-            }
-        ]
+                    },
+                    measures: [
+                        {
+                            count: {}
+                        }
+                    ]
+                }
+            ]
     };
 
     var response = environmentClient->getAggregates(aggregateRequest);
 
     if (response is AggregatesResponse) {
-        test:assertTrue(true, "Events received");
+        test:assertTrue(true, "Aggregate Events received");
     } else {
         io:println(response);
-        test:assertFail("Event API call fails");
+        test:assertFail("Aggregate Event API call fails");
     }
 }

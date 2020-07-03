@@ -19,8 +19,8 @@
 # + input - Property used for aggregates
 # + orderBy - Order by property
 public type Input record {
-    Property | BuiltInProperty input;
-    Property | BuiltInProperty orderBy?;
+    Property|BuiltInProperty input;
+    Property|BuiltInProperty orderBy?;
 };
 
 # Ascending order type
@@ -30,14 +30,14 @@ public const ORDER_ASCENDING = "Asc";
 public const ORDER_DESCENDING = "Desc";
 
 # Order record
-public type Order ORDER_ASCENDING | ORDER_DESCENDING;
+public type Order ORDER_ASCENDING|ORDER_DESCENDING;
 
 # Sort type used to sort the returned results
 #
 # + input - property used to sort
 # + order - Asc/Desc
 public type Sort record {
-    Property | BuiltInProperty input;
+    Property|BuiltInProperty input;
     Order 'order;
 };
 
@@ -74,7 +74,7 @@ public type DateBreaks record {
 # + input - Property used to get unique values
 # + take - Limit of the unique values
 public type UniqueValues record {
-    Property | BuiltInProperty input;
+    Property|BuiltInProperty input;
     int take;
 };
 
@@ -91,7 +91,7 @@ public type UniqueValuesExpression record {
 # + input - Property used to get datetime values
 # + breaks - Break information
 public type DateHistogram record {
-    Property | BuiltInProperty input;
+    Property|BuiltInProperty input;
     DateBreaks breaks;
 };
 
@@ -107,7 +107,7 @@ public type DateHistogramExpression record {
 # + input - Property used to get datetime values
 # + breaks - Break information
 public type NumericHistogram record {
-    Property | BuiltInProperty input;
+    Property|BuiltInProperty input;
     NumericBreaks breaks;
 };
 
@@ -119,7 +119,7 @@ public type NumericHistogramExpression record {
 };
 
 # Dimensions record type
-public type Dimension UniqueValuesExpression | DateHistogramExpression | NumericHistogramExpression;
+public type Dimension UniqueValuesExpression|DateHistogramExpression|NumericHistogramExpression;
 
 # Count measure expression
 # 
@@ -171,8 +171,8 @@ public type LastMeasureExpression record {
 };
 
 # Measure record type
-public type Measure CountMeasureExpression | MinMeasureExpression | MaxMeasureExpression | AvgMeasureExpression
- | SumMeasureExpression | FirstMeasureExpression | LastMeasureExpression;
+public type Measure CountMeasureExpression|MinMeasureExpression|MaxMeasureExpression|AvgMeasureExpression
+ |SumMeasureExpression|FirstMeasureExpression|LastMeasureExpression;
 
 # Aggregates record type 
 # 
