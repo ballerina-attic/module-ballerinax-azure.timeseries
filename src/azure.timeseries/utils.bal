@@ -14,26 +14,26 @@
 // specific language governing permissions and limitations
 import ballerina/http;
 
-function processErrorResponse(error errorResponse, TIMESERIES_API apiName) returns @untainted error {
+isolated function processErrorResponse(error errorResponse, TIMESERIES_API apiName) returns @untainted error {
     return error("Error invoking '" + apiName.toString() + "'.", errorResponse);
 }
 
-function processInvalidPayloadFormat(http:Response response, TIMESERIES_API apiName) returns @untainted error {
+isolated function processInvalidPayloadFormat(http:Response response, TIMESERIES_API apiName) returns @untainted error {
     return error("Invalid response format from '" + apiName.toString() + "', expecting 'JSON'. Payload: " +
         response.getTextPayload().toString());
 }
 
-function processInvalidStatusCode(http:Response response, TIMESERIES_API apiName) returns @untainted error {
+isolated function processInvalidStatusCode(http:Response response, TIMESERIES_API apiName) returns @untainted error {
     return error("Invalid response from '" + apiName.toString() + "'. Status code: " + response.statusCode.toString() +
         ", payload: " + response.getTextPayload().toString());
 }
 
-function createEnvironments(json jsonResponse) returns @untainted (Environment[]|error) {
+isolated function createEnvironments(json jsonResponse) returns @untainted (Environment[]|error) {
     Environment[] environments = convertToEnvironments(<json[]>jsonResponse.environments);
     return environments;
 }
 
-function convertToEnvironments(json[] jsonEnv) returns Environment[] {
+isolated function convertToEnvironments(json[] jsonEnv) returns Environment[] {
     int i = 0;
     Environment[] environments = [];
     foreach json environment in jsonEnv {
@@ -59,7 +59,7 @@ function convertToEnvironments(json[] jsonEnv) returns Environment[] {
 }
 
 
-function createAvailabilityResponse(json jsonResponse) returns @untainted AvailabilityResponse {
+isolated function createAvailabilityResponse(json jsonResponse) returns @untainted AvailabilityResponse {
     AvailabilityResponse response = {
         'from: <string>jsonResponse.range.'from,
         'to: <string>jsonResponse.range.'to,
@@ -69,12 +69,12 @@ function createAvailabilityResponse(json jsonResponse) returns @untainted Availa
     return response;
 }
 
-function createPropertiesArray(json jsonResponse) returns @untainted (PropertyMetaData[]|error) {
+isolated function createPropertiesArray(json jsonResponse) returns @untainted (PropertyMetaData[]|error) {
     PropertyMetaData[] properties = convertToProperties(<json[]>jsonResponse.properties);
     return properties;
 }
 
-function convertToProperties(json[] jsonProperties) returns PropertyMetaData[] {
+isolated function convertToProperties(json[] jsonProperties) returns PropertyMetaData[] {
     int i = 0;
     PropertyMetaData[] properties = [];
     foreach json property in jsonProperties {
@@ -87,7 +87,7 @@ function convertToProperties(json[] jsonProperties) returns PropertyMetaData[] {
     return properties;
 }
 
-function createEventsResponse(json jsonResponse) returns @untainted (EventsResponse|error) {
+isolated function createEventsResponse(json jsonResponse) returns @untainted (EventsResponse|error) {
     Warning[] warningsArray = !(jsonResponse.warnings is error)
         ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
     EventsResponse eventsResponse = {
@@ -97,7 +97,7 @@ function createEventsResponse(json jsonResponse) returns @untainted (EventsRespo
     return eventsResponse;
 }
 
-function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
+isolated function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
     int i = 0;
     Event[] events = [];
 
@@ -132,7 +132,7 @@ function convertToSchemaCategories(json[] jsonEvents) returns SchemaCategory[] {
     return schemas.toArray();
 }
 
-function populateEvent(map<json> eventObj, PropertyMetaData[] properties) returns @untainted Event {
+isolated function populateEvent(map<json> eventObj, PropertyMetaData[] properties) returns @untainted Event {
     map<anydata> eventValues = {};
     json[] values = <json[]>eventObj.values;
 
@@ -151,7 +151,7 @@ function populateEvent(map<json> eventObj, PropertyMetaData[] properties) return
     return eventValue;
 }
 
-function createAggregateResponse(json jsonResponse) returns @untainted (AggregatesResponse|error) {
+isolated function createAggregateResponse(json jsonResponse) returns @untainted (AggregatesResponse|error) {
     Warning[] warningsArray = !(jsonResponse.warnings is error)
         ? convertToWarnings(<json[]>jsonResponse.warnings) : [];
     AggregatesResponse aggregateResponse = {
@@ -162,7 +162,7 @@ function createAggregateResponse(json jsonResponse) returns @untainted (Aggregat
     return aggregateResponse;
 }
 
-function convertToWarnings(json[] jsonWarning) returns Warning[] {
+isolated function convertToWarnings(json[] jsonWarning) returns Warning[] {
     int i = 0;
     Warning[] warnings = [];
     foreach json warning in jsonWarning {

@@ -2,7 +2,7 @@
 
 | Ballerina Language Version  | Azure Insights API Version     |
 | ----------------------------| -------------------------------|
-|  Swan Lake Preview1         |   2016-12-12                   |
+|  Swan Lake Preview5         |   2016-12-12                   |
 
 ## Prerequisites
 

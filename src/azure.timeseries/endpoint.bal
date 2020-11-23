@@ -17,7 +17,7 @@
 import ballerina/http;
 import ballerina/oauth2;
 
-public type InsightsClient client object {
+public client class InsightsClient {
     private http:Client insightsClient;
     private ConnectionConfiguration config;
 
@@ -49,19 +49,19 @@ public type InsightsClient client object {
     # + return - Array of environment records or error
     public remote function getEnvironments() returns Environment[]|error {
         var httpResponse = self.insightsClient->get(VERSION);
-
-        if (httpResponse is http:Response) {
-            var jsonResponse = httpResponse.getJsonPayload();
-            if (jsonResponse is json) {
-                if (httpResponse.statusCode == http:STATUS_OK) {
-                    return createEnvironments(jsonResponse);
-                }
-                return processInvalidStatusCode(httpResponse, ENVIRONMENTS_API);
-            }
-            return processInvalidPayloadFormat(httpResponse, ENVIRONMENTS_API);
-        } else {
+        if (httpResponse is error) {
             return processErrorResponse(httpResponse, ENVIRONMENTS_API);
         }
+
+        http:Response response = <http:Response> httpResponse;
+        var jsonResponse = response.getJsonPayload();
+        if (jsonResponse is json) {
+            if (response.statusCode == http:STATUS_OK) {
+                return createEnvironments(jsonResponse);
+            }
+            return processInvalidStatusCode(response, ENVIRONMENTS_API);
+        }
+        return processInvalidPayloadFormat(response, ENVIRONMENTS_API);
     }
 
     # Initiate and get an environment Client.
@@ -74,9 +74,9 @@ public type InsightsClient client object {
         return environmentClient;
     }
 
-};
+}
 
-public type EnvironmentClient client object {
+public client class EnvironmentClient {
 
     public http:Client environmentClient;
     public string BASE_URL;
@@ -110,19 +110,19 @@ public type EnvironmentClient client object {
     public remote function getAvailability() returns AvailabilityResponse|error {
 
         var httpResponse = self.environmentClient->get("/availability" + VERSION);
-
-        if (httpResponse is http:Response) {
-            var jsonResponse = httpResponse.getJsonPayload();
-            if (jsonResponse is json) {
-                if (httpResponse.statusCode == http:STATUS_OK) {
-                    return createAvailabilityResponse(jsonResponse);
-                }
-                return processInvalidStatusCode(httpResponse, AVAILABILITY_API);
-            }
-            return processInvalidPayloadFormat(httpResponse, AVAILABILITY_API);
-        } else {
+        if (httpResponse is error) {
             return processErrorResponse(httpResponse, AVAILABILITY_API);
         }
+
+        http:Response response = <http:Response> httpResponse;
+        var jsonResponse = response.getJsonPayload();
+        if (jsonResponse is json) {
+            if (response.statusCode == http:STATUS_OK) {
+                return createAvailabilityResponse(jsonResponse);
+            }
+            return processInvalidStatusCode(response, AVAILABILITY_API);
+        }
+        return processInvalidPayloadFormat(response, AVAILABILITY_API);
     }
 
     # Get the Environment Metadata i.e., all properties metadata for a specific time period.
@@ -140,19 +140,19 @@ public type EnvironmentClient client object {
         request.setJsonPayload(eventsReqPayload);
 
         var httpResponse = self.environmentClient->post("/metadata" + VERSION, request);
-
-        if (httpResponse is http:Response) {
-            var jsonResponse = httpResponse.getJsonPayload();
-            if (jsonResponse is json) {
-                if (httpResponse.statusCode == http:STATUS_OK) {
-                    return createPropertiesArray(jsonResponse);
-                }
-                return processInvalidStatusCode(httpResponse, METADATA_API);
-            }
-            return processInvalidPayloadFormat(httpResponse, METADATA_API);
-        } else {
+        if (httpResponse is error) {
             return processErrorResponse(httpResponse, METADATA_API);
         }
+
+        http:Response response = <http:Response> httpResponse;
+        var jsonResponse = response.getJsonPayload();
+        if (jsonResponse is json) {
+            if (response.statusCode == http:STATUS_OK) {
+                return createPropertiesArray(jsonResponse);
+            }
+            return processInvalidStatusCode(response, METADATA_API);
+        }
+        return processInvalidPayloadFormat(response, METADATA_API);
     }
 
     # Get the Events for a specific time interval based on any filter if needed.
@@ -167,19 +167,19 @@ public type EnvironmentClient client object {
         request.setJsonPayload(eventsReqPayload);
 
         var httpResponse = self.environmentClient->post("/events" + VERSION, request);
-
-        if (httpResponse is http:Response) {
-            var jsonResponse = httpResponse.getJsonPayload();
-            if (jsonResponse is json) {
-                if (httpResponse.statusCode == http:STATUS_OK) {
-                    return createEventsResponse(jsonResponse);
-                }
-                return processInvalidStatusCode(httpResponse, EVENTS_API);
-            }
-            return processInvalidPayloadFormat(httpResponse, EVENTS_API);
-        } else {
+        if (httpResponse is error) {
             return processErrorResponse(httpResponse, EVENTS_API);
         }
+        
+        http:Response response = <http:Response> httpResponse;
+        var jsonResponse = response.getJsonPayload();
+        if (jsonResponse is json) {
+            if (response.statusCode == http:STATUS_OK) {
+                return createEventsResponse(jsonResponse);
+            }
+            return processInvalidStatusCode(response, EVENTS_API);
+        }
+        return processInvalidPayloadFormat(response, EVENTS_API);
     }
 
     # Get the aggregates of the data based on aggregation rules within a time interval.
@@ -202,22 +202,21 @@ public type EnvironmentClient client object {
 
         var httpResponse = self.environmentClient->post("/aggregates" + VERSION, request);
 
-        if (httpResponse is http:Response) {
-            var jsonResponse = httpResponse.getJsonPayload();
-            if (jsonResponse is json) {
-
-                if (httpResponse.statusCode == http:STATUS_OK) {
-                    return createAggregateResponse(jsonResponse);
-                }
-                return processInvalidStatusCode(httpResponse, AGGREGATES_API);
-            }
-            return processInvalidPayloadFormat(httpResponse, AGGREGATES_API);
-        } else {
+        if (httpResponse is error) {
             return processErrorResponse(httpResponse, AGGREGATES_API);
         }
-    }
 
-};
+        http:Response response = <http:Response> httpResponse;
+        var jsonResponse = response.getJsonPayload();
+        if (jsonResponse is json) {
+            if (response.statusCode == http:STATUS_OK) {
+                return createAggregateResponse(jsonResponse);
+            }
+            return processInvalidStatusCode(response, AGGREGATES_API);
+        }
+        return processInvalidPayloadFormat(response, AGGREGATES_API);
+    }
+}
 
 public type MetaDataRequest record {
     SearchSpan searchSpan;
