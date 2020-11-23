@@ -16,7 +16,7 @@ The `ballerinax/azure.timeseries` module allows you to perform the following ope
 
 |                                |       Versions              |
 |:------------------------------:|:---------------------------:|
-| Ballerina Language             | Swan Lake Preview1          |
+| Ballerina Language             | Swan Lake Preview5          |
 | Azure Time-series Insights API | 2016-12-12                  |
 
 ## Feature Overview
